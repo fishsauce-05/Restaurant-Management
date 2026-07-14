@@ -2,7 +2,7 @@ package model;
 
 public class OrderDish extends BaseEntity {
     private int quantity;
-    private double currentPrice;
+    private int currentPrice;
     private Dish dish;
 
     public OrderDish() {
@@ -19,13 +19,13 @@ public class OrderDish extends BaseEntity {
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
 
-    public double getCurrentPrice() { return currentPrice; }
-    public void setCurrentPrice(double currentPrice) { this.currentPrice = currentPrice; }
+    public int getCurrentPrice() { return currentPrice; }
+    public void setCurrentPrice(int currentPrice) { this.currentPrice = currentPrice; }
 
     public Dish getDish() { return dish; }
     public void setDish(Dish dish) { this.dish = dish; }
 
-    public double getTemporaryAmount() {
+    public int getTemporaryAmount() {
         return this.quantity * this.currentPrice;
     }
 

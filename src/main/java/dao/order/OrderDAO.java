@@ -69,7 +69,7 @@ public class OrderDAO extends DAO implements IOrderDAO {
                         psUpdateDish.executeUpdate();
                     } else {
                         psInsertDish.setInt(1, od.getQuantity());
-                        psInsertDish.setDouble(2, od.getCurrentPrice());
+                        psInsertDish.setInt(2, od.getCurrentPrice());
                         psInsertDish.setInt(3, orderId);
                         psInsertDish.setInt(4, od.getDish().getId());
                         psInsertDish.executeUpdate();
@@ -122,14 +122,14 @@ public class OrderDAO extends DAO implements IOrderDAO {
                 while (rsItem.next()) {
                     OrderDish item = new OrderDish();
                     item.setQuantity(rsItem.getInt("quantity"));
-                    item.setCurrentPrice(rsItem.getDouble("currentPrice"));
+                    item.setCurrentPrice(rsItem.getInt("currentPrice"));
 
                     Dish dish = new Dish();
                     dish.setId(rsItem.getInt("tblDishId"));
                     dish.setDishCode(rsItem.getString("dishCode"));
                     dish.setName(rsItem.getString("name"));
                     dish.setCategory(rsItem.getString("category"));
-                    dish.setPrice(rsItem.getDouble("price"));
+                    dish.setPrice(rsItem.getInt("price"));
 
                     item.setDish(dish);
                     items.add(item);

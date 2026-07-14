@@ -26,10 +26,10 @@ public class TableDAO extends DAO implements ITableDAO {
         ArrayList<Table> list = new ArrayList<>();
         if (con == null) return list;
         String sql = "SELECT * FROM tblTable WHERE id NOT IN (" +
-                 "SELECT tblTableId FROM tblBookedTable bt " +
-                 "JOIN tblBooking b ON bt.tblBookingId = b.id " +
-                 "WHERE b.bookDate = ? AND b.status IN (N'Chờ nhận bàn', N'Đã xác nhận') " +
-                 "AND ABS(DATEDIFF(MINUTE, CAST(b.bookTime AS TIME), CAST(? AS TIME))) < 75)";
+                "SELECT tblTableId FROM tblBookedTable bt " +
+                "JOIN tblBooking b ON bt.tblBookingId = b.id " +
+                "WHERE b.bookDate = ? AND b.status IN (N'Chờ nhận bàn', N'Đã xác nhận') " +
+                "AND ABS(TIMESTAMPDIFF(MINUTE, b.bookTime, ?)) < 75)";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, date);
@@ -57,9 +57,9 @@ public class TableDAO extends DAO implements ITableDAO {
         if (con == null) return false;
         boolean isAvailable = true;
         String sql = "SELECT COUNT(*) AS count FROM tblBookedTable bt " +
-                     "JOIN tblBooking b ON bt.tblBookingId = b.id " +
-                     "WHERE bt.tblTableId = ? AND b.bookDate = ? AND b.status IN (N'Chờ nhận bàn', N'Đã xác nhận') " +
-                     "AND ABS(DATEDIFF(MINUTE, CAST(b.bookTime AS TIME), CAST(? AS TIME))) < 75";
+                    "JOIN tblBooking b ON bt.tblBookingId = b.id " +
+                    "WHERE bt.tblTableId = ? AND b.bookDate = ? AND b.status IN (N'Chờ nhận bàn', N'Đã xác nhận') " +
+                    "AND ABS(TIMESTAMPDIFF(MINUTE, b.bookTime, ?)) < 75";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, tableId);
@@ -339,5 +339,18 @@ public class TableDAO extends DAO implements ITableDAO {
         try {
             con.setAutoCommit(true);
         } catch (SQLException ignored) {}
+    }
+
+    @Override
+    public boolean checkoutTable(int tableId) {
+        if (con == null) return false;
+        String sql = "UPDATE tblBookedTable SET isCheckedin = 0 WHERE tblTableID = ? AND isCheckedin = 1";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, tableId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

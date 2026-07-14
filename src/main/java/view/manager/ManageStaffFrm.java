@@ -26,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class ManageStaffFrm extends JFrame {
     private static final String[] STAFF_COLUMNS = {
-            "ID", "Ma NV", "Ten dang nhap", "Ho ten", "Vai tro", "So dien thoai", "Email", "Trang thai"
+            "ID", "Mã NV", "Tên đăng nhập", "Họ tên", "Vai trò", "Số điện thoại", "Email", "Trạng thái"
     };
 
     private final User currentUser;
@@ -37,7 +37,7 @@ public class ManageStaffFrm extends JFrame {
     private List<User> displayedUsers = new ArrayList<>();
 
     public ManageStaffFrm(User currentUser) {
-        super("Quan ly nhan vien");
+        super("Quản lý nhân viên");
         this.currentUser = currentUser;
         this.userService = new UserServiceImpl();
         configureFrm();
@@ -55,13 +55,13 @@ public class ManageStaffFrm extends JFrame {
         JPanel rootPanel = new JPanel(new BorderLayout(12, 12));
         rootPanel.setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));
 
-        JLabel titleLabel = new JLabel("Quan ly nhan vien dang hoat dong");
+        JLabel titleLabel = new JLabel("Quản lý nhân viên đang hoạt động");
         titleLabel.setFont(titleLabel.getFont().deriveFont(20.0f));
 
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
-        JButton searchButton = new JButton("Tim kiem");
-        JButton reloadButton = new JButton("Tai lai");
-        searchPanel.add(new JLabel("Tu khoa:"));
+        JButton searchButton = new JButton("Tìm kiếm");
+        JButton reloadButton = new JButton("Tải lại");
+        searchPanel.add(new JLabel("Từ khóa:"));
         searchPanel.add(searchField);
         searchPanel.add(searchButton);
         searchPanel.add(reloadButton);
@@ -73,10 +73,10 @@ public class ManageStaffFrm extends JFrame {
         configureTable();
 
         JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
-        JButton addButton = new JButton("Them");
-        JButton editButton = new JButton("Sua");
-        JButton deleteButton = new JButton("Xoa");
-        JButton closeButton = new JButton("Dong");
+        JButton addButton = new JButton("Thêm");
+        JButton editButton = new JButton("Sửa");
+        JButton deleteButton = new JButton("Xóa");
+        JButton closeButton = new JButton("Đóng");
         actionPanel.add(addButton);
         actionPanel.add(editButton);
         actionPanel.add(deleteButton);
@@ -124,7 +124,7 @@ public class ManageStaffFrm extends JFrame {
         try {
             setUsers(userService.getActiveUsers());
         } catch (Exception exception) {
-            showDatabaseError("Khong the tai danh sach nhan vien", exception);
+            showDatabaseError("Không thể tải danh sách nhân viên", exception);
         }
     }
 
@@ -132,7 +132,7 @@ public class ManageStaffFrm extends JFrame {
         try {
             setUsers(userService.searchActiveUsers(searchField.getText()));
         } catch (Exception exception) {
-            showDatabaseError("Khong the tim kiem nhan vien", exception);
+            showDatabaseError("Không thể tìm kiếm nhân viên", exception);
         }
     }
 
@@ -163,14 +163,14 @@ public class ManageStaffFrm extends JFrame {
         dialog.setVisible(true);
         if (dialog.isSaved()) {
             loadUsers();
-            JOptionPane.showMessageDialog(this, "Da them nhan vien thanh cong.");
+            JOptionPane.showMessageDialog(this, "Đã thêm nhân viên thành công.");
         }
     }
 
     private void showEditDialog() {
         User selectedUser = getSelectedUser();
         if (selectedUser == null) {
-            JOptionPane.showMessageDialog(this, "Vui long chon mot nhan vien de sua.");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một nhân viên để sửa.");
             return;
         }
 
@@ -178,20 +178,20 @@ public class ManageStaffFrm extends JFrame {
         dialog.setVisible(true);
         if (dialog.isSaved()) {
             loadUsers();
-            JOptionPane.showMessageDialog(this, "Da cap nhat nhan vien thanh cong.");
+            JOptionPane.showMessageDialog(this, "Đã cập nhật nhân viên thành công.");
         }
     }
 
     private void deleteSelectedUser() {
         User selectedUser = getSelectedUser();
         if (selectedUser == null) {
-            JOptionPane.showMessageDialog(this, "Vui long chon mot nhan vien de xoa.");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một nhân viên để xóa.");
             return;
         }
 
         int choice = JOptionPane.showConfirmDialog(this,
-                "Ban co chac muon xoa nhan vien \"" + selectedUser.getName() + "\"?",
-                "Xac nhan xoa", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                "Bạn có chắc muốn xóa nhân viên \"" + selectedUser.getName() + "\"?",
+                "Xác nhận xóa", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (choice != JOptionPane.YES_OPTION) {
             return;
         }
@@ -199,9 +199,9 @@ public class ManageStaffFrm extends JFrame {
         try {
             userService.softDeleteUser(selectedUser.getId(), currentUser);
             loadUsers();
-            JOptionPane.showMessageDialog(this, "Da xoa nhan vien khoi danh sach dang hoat dong.");
+            JOptionPane.showMessageDialog(this, "Đã xóa nhân viên khỏi danh sách đang hoạt động.");
         } catch (Exception exception) {
-            showDatabaseError("Khong the xoa nhan vien", exception);
+            showDatabaseError("Không thể xóa nhân viên", exception);
         }
     }
 
@@ -220,6 +220,6 @@ public class ManageStaffFrm extends JFrame {
 
     private void showDatabaseError(String message, Exception exception) {
         JOptionPane.showMessageDialog(this, message + ": " + exception.getMessage(),
-                "Loi du lieu", JOptionPane.ERROR_MESSAGE);
+                "Lỗi dữ liệu", JOptionPane.ERROR_MESSAGE);
     }
 }

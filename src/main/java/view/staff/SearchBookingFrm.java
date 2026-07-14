@@ -17,7 +17,7 @@ public class SearchBookingFrm extends JFrame implements ActionListener {
     private ArrayList<Booking> listBooking;
 
     public SearchBookingFrm(User u) {
-        super("Search Booking");
+        super("Tìm đặt bàn");
         this.user = u;
         this.setSize(600, 450);
         this.setLocationRelativeTo(null);
@@ -33,7 +33,7 @@ public class SearchBookingFrm extends JFrame implements ActionListener {
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
         headerPanel.add(new JLabel("(6)"), BorderLayout.WEST);
-        headerPanel.add(new JLabel("Search Booking", SwingConstants.CENTER), BorderLayout.CENTER);
+        headerPanel.add(new JLabel("Tìm đặt bàn", SwingConstants.CENTER), BorderLayout.CENTER);
 
         JPanel formPanel = new JPanel(new GridBagLayout());
         formPanel.setOpaque(false);
@@ -41,17 +41,17 @@ public class SearchBookingFrm extends JFrame implements ActionListener {
         gbc.insets = new Insets(10, 15, 10, 15);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        gbc.gridx = 0; gbc.gridy = 0; formPanel.add(new JLabel("Client phone number"), gbc);
+        gbc.gridx = 0; gbc.gridy = 0; formPanel.add(new JLabel("Số điện thoại khách hàng"), gbc);
         gbc.gridx = 1; txtClientPhone = new JTextField("", 20); formPanel.add(txtClientPhone, gbc);
 
         JPanel btnPanel = new JPanel();
         btnPanel.setOpaque(false);
-        btnSearch = new JButton("Search");
+        btnSearch = new JButton("Tìm kiếm");
         btnSearch.setBackground(Color.WHITE);
         btnSearch.setPreferredSize(new Dimension(150, 30));
         btnPanel.add(btnSearch);
 
-        btnBack = new JButton("Back");
+        btnBack = new JButton("Quay lại");
         btnBack.setBackground(new Color(255, 255, 153));
         btnBack.setFocusPainted(false);
         btnBack.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -61,7 +61,7 @@ public class SearchBookingFrm extends JFrame implements ActionListener {
         topWrapper.add(formPanel, BorderLayout.CENTER);
         topWrapper.add(btnPanel, BorderLayout.SOUTH);
 
-        String[] cols = {"ID", "Table Code", "Datetime", "Number of people"};
+        String[] cols = {"ID", "Mã bàn", "Ngày giờ", "Số lượng khách"};
 
         tableModel = new DefaultTableModel(cols, 0) {
             @Override

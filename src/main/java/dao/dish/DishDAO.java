@@ -115,7 +115,7 @@ public class DishDAO extends DAO implements IDishDAO {
             ps.setString(2, dish.getCategory().trim());
             ps.setString(3, dish.getName().trim());
             ps.setString(4, emptyToNull(dish.getDescription()));
-            ps.setDouble(5, dish.getPrice());
+            ps.setInt(5, dish.getPrice());
             ps.setString(6, Dish.STATUS_ACTIVE);
             int affected = ps.executeUpdate();
             try (ResultSet keys = ps.getGeneratedKeys()) {
@@ -140,7 +140,7 @@ public class DishDAO extends DAO implements IDishDAO {
             ps.setString(1, dish.getCategory().trim());
             ps.setString(2, dish.getName().trim());
             ps.setString(3, emptyToNull(dish.getDescription()));
-            ps.setDouble(4, dish.getPrice());
+            ps.setInt(4, dish.getPrice());
             ps.setInt(5, dish.getId());
             ps.setString(6, Dish.STATUS_ACTIVE);
             return ps.executeUpdate() > 0;
@@ -243,7 +243,7 @@ public class DishDAO extends DAO implements IDishDAO {
         d.setCategory(rs.getString("category"));
         d.setName(rs.getString("name"));
         d.setDescription(rs.getString("description"));
-        d.setPrice(rs.getDouble("price"));
+        d.setPrice(rs.getInt("price"));
         try {
             d.setStatus(rs.getString("status"));
         } catch (SQLException ignored) {}

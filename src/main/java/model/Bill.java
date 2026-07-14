@@ -6,7 +6,7 @@ public class Bill extends BaseEntity {
     private Date paymentDate;
     private String paymentTime;
     private Date createdTime;
-    private double totalAmount;
+    private int totalAmount;
     private String paymentMethod;
     private Booking booking;
     private Order order;
@@ -21,7 +21,7 @@ public class Bill extends BaseEntity {
         this.order = order;
         this.user = user;
         this.paymentMethod = paymentMethod;
-        this.totalAmount = order != null ? order.getTotalAmount() : 0.0;
+        this.totalAmount = order != null ? order.getTotalAmount() : 0;
         this.createdTime = new Date();
     }
 
@@ -34,8 +34,8 @@ public class Bill extends BaseEntity {
     public Date getCreatedTime() { return createdTime; }
     public void setCreatedTime(Date createdTime) { this.createdTime = createdTime; }
 
-    public double getTotalAmount() { return totalAmount; }
-    public void setTotalAmount(double totalAmount) { this.totalAmount = totalAmount; }
+    public int getTotalAmount() { return totalAmount; }
+    public void setTotalAmount(int totalAmount) { this.totalAmount = totalAmount; }
 
     public String getPaymentMethod() { return paymentMethod; }
     public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }

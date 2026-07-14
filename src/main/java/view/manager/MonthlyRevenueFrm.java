@@ -78,7 +78,7 @@ public class MonthlyRevenueFrm extends JFrame implements ActionListener {
                 tableModel.addRow(new Object[]{
                     ms.getMonth(),
                     ms.getYear(),
-                    String.format("%,.2f", ms.getTotalRevenue())
+                    String.format("%,d", ms.getTotalRevenue())
                 });
             }
         } else if (e.getSource() == btnBack) {
@@ -89,7 +89,7 @@ public class MonthlyRevenueFrm extends JFrame implements ActionListener {
 
     private ArrayList<MonthlyRevenueStat> calculateMonthlyRevenue(ArrayList<Bill> bills) {
         ArrayList<MonthlyRevenueStat> result = new ArrayList<>();
-        Map<String, Double> revenueMap = new HashMap<>();
+        Map<String, Integer> revenueMap = new HashMap<>();
 
         Calendar cal = Calendar.getInstance();
         for (Bill b : bills) {
@@ -98,11 +98,11 @@ public class MonthlyRevenueFrm extends JFrame implements ActionListener {
                 int month = cal.get(Calendar.MONTH) + 1;
                 int year = cal.get(Calendar.YEAR);
                 String key = month + "-" + year;
-                revenueMap.put(key, revenueMap.getOrDefault(key, 0.0) + b.getTotalAmount());
+                revenueMap.put(key, revenueMap.getOrDefault(key, 0) + b.getTotalAmount());
             }
         }
 
-        for (Map.Entry<String, Double> entry : revenueMap.entrySet()) {
+        for (Map.Entry<String, Integer> entry : revenueMap.entrySet()) {
             String[] parts = entry.getKey().split("-");
             int m = Integer.parseInt(parts[0]);
             int y = Integer.parseInt(parts[1]);

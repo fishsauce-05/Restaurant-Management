@@ -2,8 +2,8 @@ package model;
 
 public class OrderItem extends BaseEntity {
     private int quantity;
-    private double unitPrice;
-    private double temporaryAmount;
+    private int unitPrice;
+    private int temporaryAmount;
     private Dish dish;
 
     public OrderItem() {
@@ -21,11 +21,11 @@ public class OrderItem extends BaseEntity {
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
 
-    public double getUnitPrice() { return unitPrice; }
-    public void setUnitPrice(double unitPrice) { this.unitPrice = unitPrice; }
+    public int getUnitPrice() { return unitPrice; }
+    public void setUnitPrice(int unitPrice) { this.unitPrice = unitPrice; }
 
-    public double getTemporaryAmount() { return temporaryAmount; }
-    public void setTemporaryAmount(double temporaryAmount) { this.temporaryAmount = temporaryAmount; }
+    public int getTemporaryAmount() { return temporaryAmount; }
+    public void setTemporaryAmount(int temporaryAmount) { this.temporaryAmount = temporaryAmount; }
 
     public Dish getDish() { return dish; }
     public void setDish(Dish dish) { this.dish = dish; }

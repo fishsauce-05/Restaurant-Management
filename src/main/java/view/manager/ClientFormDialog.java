@@ -35,7 +35,7 @@ public class ClientFormDialog extends JDialog {
     }
 
     public ClientFormDialog(Frame owner, ClientServiceImpl clientService, Client editingClient) {
-        super(owner, editingClient == null ? "Them khach hang" : "Sua khach hang", true);
+        super(owner, editingClient == null ? "Thêm khách hàng" : "Sửa khách hàng", true);
         this.clientService = clientService;
         this.editingClient = editingClient;
         configureDialog(owner);
@@ -67,22 +67,22 @@ public class ClientFormDialog extends JDialog {
         addressArea.setLineWrap(true);
         addressArea.setWrapStyleWord(true);
 
-        addField(formPanel, constraints, 0, "Ma khach hang:", clientCodeField);
-        addField(formPanel, constraints, 1, "Ho ten:", fullNameField);
-        addField(formPanel, constraints, 2, "So dien thoai:", phoneField);
+        addField(formPanel, constraints, 0, "Mã khách hàng:", clientCodeField);
+        addField(formPanel, constraints, 1, "Họ tên:", fullNameField);
+        addField(formPanel, constraints, 2, "Số điện thoại:", phoneField);
         addField(formPanel, constraints, 3, "Email:", emailField);
 
         constraints.gridx = 0;
         constraints.gridy = 4;
         constraints.weightx = 0;
-        formPanel.add(new JLabel("Dia chi:"), constraints);
+        formPanel.add(new JLabel("Địa chỉ:"), constraints);
         constraints.gridx = 1;
         constraints.weightx = 1;
         formPanel.add(addressArea, constraints);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton saveButton = new JButton("Luu");
-        JButton cancelButton = new JButton("Huy");
+        JButton saveButton = new JButton("Lưu");
+        JButton cancelButton = new JButton("Hủy");
         saveButton.addActionListener(event -> saveClient());
         cancelButton.addActionListener(event -> dispose());
         buttonPanel.add(saveButton);
@@ -106,7 +106,7 @@ public class ClientFormDialog extends JDialog {
 
     private void populateForm() {
         if (editingClient == null) {
-            clientCodeField.setText("Tu dong tao khi luu");
+            clientCodeField.setText("Tự động tạo khi lưu");
             return;
         }
         clientCodeField.setText(safeText(editingClient.getClientCode()));
@@ -127,7 +127,7 @@ public class ClientFormDialog extends JDialog {
             saved = true;
             dispose();
         } catch (Exception exception) {
-            JOptionPane.showMessageDialog(this, exception.getMessage(), "Du lieu khong hop le", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, exception.getMessage(), "Dữ liệu không hợp lệ", JOptionPane.WARNING_MESSAGE);
         }
     }
 

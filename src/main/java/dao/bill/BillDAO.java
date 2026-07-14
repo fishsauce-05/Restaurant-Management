@@ -26,7 +26,7 @@ public class BillDAO extends DAO implements IBillDAO {
 
             PreparedStatement ps1 = con.prepareStatement(sqlBill, Statement.RETURN_GENERATED_KEYS);
             ps1.setTimestamp(1, new Timestamp(bill.getCreatedTime().getTime()));
-            ps1.setDouble(2, bill.getTotalAmount());
+            ps1.setInt(2, bill.getTotalAmount());
             ps1.setString(3, bill.getPaymentMethod());
             ps1.setInt(4, bill.getOrder().getId());
             ps1.setInt(5, bill.getUser().getId());
@@ -74,7 +74,7 @@ public class BillDAO extends DAO implements IBillDAO {
                 Bill bill = new Bill();
                 bill.setId(rs.getInt("id"));
                 bill.setCreatedTime(rs.getTimestamp("createTime"));
-                bill.setTotalAmount(rs.getDouble("totalAmount"));
+                bill.setTotalAmount(rs.getInt("totalAmount"));
                 bill.setPaymentMethod(rs.getString("paymentMethod"));
 
                 User user = new User();
@@ -188,7 +188,7 @@ public class BillDAO extends DAO implements IBillDAO {
         bl.setId(rs.getInt("id"));
         bl.setPaymentDate(rs.getDate("paymentDate"));
         bl.setPaymentTime(rs.getString("paymentTime"));
-        bl.setTotalAmount(rs.getDouble("totalAmount"));
+        bl.setTotalAmount(rs.getInt("totalAmount"));
 
         int bookingId = rs.getInt("bid");
         if (!rs.wasNull()) {

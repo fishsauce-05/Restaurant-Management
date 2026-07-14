@@ -6,13 +6,13 @@ public class GuestStat implements Serializable {
     private String timeFrm;
     private int avgCustomers;
     private double avgRevenuePerHead;
-    private double totalRevenue;
+    private int totalRevenue;
 
     public GuestStat() {
         super();
     }
 
-    public GuestStat(String timeFrm, int avgCustomers, double avgRevenuePerHead, double totalRevenue) {
+    public GuestStat(String timeFrm, int avgCustomers, double avgRevenuePerHead, int totalRevenue) {
         this.timeFrm = timeFrm;
         this.avgCustomers = avgCustomers;
         this.avgRevenuePerHead = avgRevenuePerHead;
@@ -28,6 +28,6 @@ public class GuestStat implements Serializable {
     public double getAvgRevenuePerHead() { return avgRevenuePerHead; }
     public void setAvgRevenuePerHead(double avgRevenuePerHead) { this.avgRevenuePerHead = avgRevenuePerHead; }
 
-    public double getTotalRevenue() { return totalRevenue; }
-    public void setTotalRevenue(double totalRevenue) { this.totalRevenue = totalRevenue; }
+    public int getTotalRevenue() { return totalRevenue; }
+    public void setTotalRevenue(int totalRevenue) { this.totalRevenue = totalRevenue; }
 }

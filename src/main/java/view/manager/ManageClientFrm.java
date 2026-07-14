@@ -26,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class ManageClientFrm extends JFrame {
     private static final String[] CLIENT_COLUMNS = {
-            "ID", "Ma KH", "Ho ten", "So dien thoai", "Email", "Dia chi", "Trang thai"
+            "ID", "Mã KH", "Họ tên", "Số điện thoại", "Email", "Địa chỉ", "Trạng thái"
     };
 
     private final Frame parentFrm;
@@ -37,7 +37,7 @@ public class ManageClientFrm extends JFrame {
     private List<Client> displayedClients = new ArrayList<>();
 
     public ManageClientFrm(Frame parentFrm) {
-        super("Quan ly khach hang");
+        super("Quản lý khách hàng");
         this.parentFrm = parentFrm;
         configureFrm();
         buildContent();
@@ -54,13 +54,13 @@ public class ManageClientFrm extends JFrame {
         JPanel rootPanel = new JPanel(new BorderLayout(12, 12));
         rootPanel.setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));
 
-        JLabel titleLabel = new JLabel("Quan ly khach hang dang hoat dong");
+        JLabel titleLabel = new JLabel("Quản lý khách hàng đang hoạt động");
         titleLabel.setFont(titleLabel.getFont().deriveFont(20.0f));
 
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
-        JButton searchButton = new JButton("Tim kiem");
-        JButton reloadButton = new JButton("Tai lai");
-        searchPanel.add(new JLabel("Tu khoa:"));
+        JButton searchButton = new JButton("Tìm kiếm");
+        JButton reloadButton = new JButton("Tải lại");
+        searchPanel.add(new JLabel("Từ khóa:"));
         searchPanel.add(searchField);
         searchPanel.add(searchButton);
         searchPanel.add(reloadButton);
@@ -72,10 +72,10 @@ public class ManageClientFrm extends JFrame {
         configureTable();
 
         JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
-        JButton addButton = new JButton("Them");
-        JButton editButton = new JButton("Sua");
-        JButton deleteButton = new JButton("Xoa");
-        JButton closeButton = new JButton("Dong");
+        JButton addButton = new JButton("Thêm");
+        JButton editButton = new JButton("Sửa");
+        JButton deleteButton = new JButton("Xóa");
+        JButton closeButton = new JButton("Đóng");
         actionPanel.add(addButton);
         actionPanel.add(editButton);
         actionPanel.add(deleteButton);
@@ -123,7 +123,7 @@ public class ManageClientFrm extends JFrame {
         try {
             setClients(clientService.getActiveClients());
         } catch (Exception exception) {
-            showDatabaseError("Khong the tai danh sach khach hang", exception);
+            showDatabaseError("Không thể tải danh sách khách hàng", exception);
         }
     }
 
@@ -131,7 +131,7 @@ public class ManageClientFrm extends JFrame {
         try {
             setClients(clientService.searchActiveClients(searchField.getText()));
         } catch (Exception exception) {
-            showDatabaseError("Khong the tim kiem khach hang", exception);
+            showDatabaseError("Không thể tìm kiếm khách hàng", exception);
         }
     }
 
@@ -161,14 +161,14 @@ public class ManageClientFrm extends JFrame {
         dialog.setVisible(true);
         if (dialog.isSaved()) {
             loadClients();
-            JOptionPane.showMessageDialog(this, "Da them khach hang thanh cong.");
+            JOptionPane.showMessageDialog(this, "Đã thêm khách hàng thành công.");
         }
     }
 
     private void showEditDialog() {
         Client selectedClient = getSelectedClient();
         if (selectedClient == null) {
-            JOptionPane.showMessageDialog(this, "Vui long chon mot khach hang de sua.");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một khách hàng để sửa.");
             return;
         }
 
@@ -176,20 +176,20 @@ public class ManageClientFrm extends JFrame {
         dialog.setVisible(true);
         if (dialog.isSaved()) {
             loadClients();
-            JOptionPane.showMessageDialog(this, "Da cap nhat khach hang thanh cong.");
+            JOptionPane.showMessageDialog(this, "Đã cập nhật khách hàng thành công.");
         }
     }
 
     private void deleteSelectedClient() {
         Client selectedClient = getSelectedClient();
         if (selectedClient == null) {
-            JOptionPane.showMessageDialog(this, "Vui long chon mot khach hang de xoa.");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một khách hàng để xóa.");
             return;
         }
 
         int choice = JOptionPane.showConfirmDialog(this,
-                "Ban co chac muon xoa khach hang \"" + selectedClient.getName() + "\"?",
-                "Xac nhan xoa", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                "Bạn có chắc muốn xóa khách hàng \"" + selectedClient.getName() + "\"?",
+                "Xác nhận xóa", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (choice != JOptionPane.YES_OPTION) {
             return;
         }
@@ -197,9 +197,9 @@ public class ManageClientFrm extends JFrame {
         try {
             clientService.softDeleteClient(selectedClient.getId());
             loadClients();
-            JOptionPane.showMessageDialog(this, "Da xoa khach hang khoi danh sach dang hoat dong.");
+            JOptionPane.showMessageDialog(this, "Đã xóa khách hàng khỏi danh sách đang hoạt động.");
         } catch (Exception exception) {
-            showDatabaseError("Khong the xoa khach hang", exception);
+            showDatabaseError("Không thể xóa khách hàng", exception);
         }
     }
 
@@ -218,6 +218,6 @@ public class ManageClientFrm extends JFrame {
 
     private void showDatabaseError(String message, Exception exception) {
         JOptionPane.showMessageDialog(this, message + ": " + exception.getMessage(),
-                "Loi du lieu", JOptionPane.ERROR_MESSAGE);
+                "Lỗi dữ liệu", JOptionPane.ERROR_MESSAGE);
     }
 }

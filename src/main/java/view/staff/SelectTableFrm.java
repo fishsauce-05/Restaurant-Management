@@ -1,5 +1,5 @@
-
 package view.staff;
+
 import model.Order;
 import model.Table;
 import model.User;
@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+import dao.table.TableDAO;
+
 public class SelectTableFrm extends JFrame {
     private User user;
     private JTable tblSelectTable;
@@ -16,7 +18,7 @@ public class SelectTableFrm extends JFrame {
     private ArrayList<Table> listTable;
     private JButton btnBack;
     public SelectTableFrm(User u) {
-        super("Select Table");
+        super("Chọn bàn");
         this.user = u;
         this.setSize(600, 450);
         this.setLocationRelativeTo(null);
@@ -28,10 +30,9 @@ public class SelectTableFrm extends JFrame {
 
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
-        headerPanel.add(new JLabel("(8)"), BorderLayout.WEST);
-        headerPanel.add(new JLabel("Select Table", SwingConstants.CENTER), BorderLayout.CENTER);
+        headerPanel.add(new JLabel("Chọn bàn", SwingConstants.CENTER), BorderLayout.CENTER);
 
-        String[] cols = {"ID", "Table Code", "Date Time", "Number of People"};
+        String[] cols = {"ID", "Mã bàn", "Ngày giờ", "Số lượng khách"};
         tableModel = new DefaultTableModel(cols, 0) {
             @Override
             public boolean isCellEditable(int row, int column) { return false; }
@@ -39,7 +40,7 @@ public class SelectTableFrm extends JFrame {
         tblSelectTable = new JTable(tableModel);
         tblSelectTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        btnBack = new JButton("Back");
+        btnBack = new JButton("Quay lại");
         btnBack.setBackground(new Color(255, 255, 153));
         btnBack.setFocusPainted(false);
         btnBack.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -49,12 +50,12 @@ public class SelectTableFrm extends JFrame {
         mainPanel.add(new JScrollPane(tblSelectTable), BorderLayout.CENTER);
         this.add(mainPanel);
 
-        dao.table.TableDAO dao = new dao.table.TableDAO();
+        TableDAO dao = new TableDAO();
         listTable = dao.getOccupiedTables();
 
         if (listTable != null) {
             for (Table t : listTable) {
-                String time = (t.getCheckinTime() != null) ? t.getCheckinTime(): "Đang phục vụ";
+                String time = (t.getCheckinTime() != null) ? t.getCheckinTime() : "Đang phục vụ";
                 tableModel.addRow(new Object[]{t.getId(), t.getTableCode(), time, t.getCapacity()});
             }
         }

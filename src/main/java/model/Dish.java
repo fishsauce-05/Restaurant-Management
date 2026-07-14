@@ -4,7 +4,7 @@ public class Dish extends BaseEntity {
     private String dishCode;
     private String name;
     private String category;
-    private double price;
+    private int price;
     private String description;
     private boolean available;
 
@@ -17,7 +17,7 @@ public class Dish extends BaseEntity {
         this.available = true;
     }
 
-    public Dish(int id, String dishCode, String name, String category, double price) {
+    public Dish(int id, String dishCode, String name, String category, int price) {
         super();
         setId(id);
         setStatus(STATUS_ACTIVE);
@@ -37,8 +37,8 @@ public class Dish extends BaseEntity {
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category; }
 
-    public double getPrice() { return price; }
-    public void setPrice(double price) { this.price = price; }
+    public int getPrice() { return price; }
+    public void setPrice(int price) { this.price = price; }
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
@@ -49,11 +49,11 @@ public class Dish extends BaseEntity {
     public String getCode() { return dishCode; }
     public void setCode(String code) { this.dishCode = code; }
 
-    public double getCurrentPrice() { return price; }
-    public void setCurrentPrice(double currentPrice) { this.price = currentPrice; }
+    public int getCurrentPrice() { return price; }
+    public void setCurrentPrice(int currentPrice) { this.price = currentPrice; }
 
     @Override
     public String toString() {
-        return dishCode + " - " + name + " (" + category + ") - " + String.format("%,.0f VNĐ", price);
+        return dishCode + " - " + name + " (" + category + ") - " + String.format("%,d VNĐ", price);
     }
 }

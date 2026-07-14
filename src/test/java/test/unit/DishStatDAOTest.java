@@ -49,7 +49,7 @@ public class DishStatDAOTest {
     @Order(4)
     @DisplayName("Lấy tổng doanh thu với khoảng ngày hợp lệ")
     void testGetTotalRevenueValid() {
-        double revenue = dishStatDAO.getTotalRevenue("2024-01-01", "2026-12-31");
+        int revenue = dishStatDAO.getTotalRevenue("2024-01-01", "2026-12-31");
         assertTrue(revenue >= 0);
     }
 
@@ -57,8 +57,8 @@ public class DishStatDAOTest {
     @Order(5)
     @DisplayName("Lấy tổng doanh thu với ngày trong tương lai trả về 0")
     void testGetTotalRevenueFuture() {
-        double revenue = dishStatDAO.getTotalRevenue("2099-01-01", "2099-12-31");
-        assertEquals(0.0, revenue, 0.01);
+        int revenue = dishStatDAO.getTotalRevenue("2099-01-01", "2099-12-31");
+        assertEquals(0, revenue);
     }
 
     @Test
@@ -93,8 +93,8 @@ public class DishStatDAOTest {
     @Order(9)
     @DisplayName("Lấy tổng doanh thu với ngày đảo ngược")
     void testGetTotalRevenueReversedDates() {
-        double revenue = dishStatDAO.getTotalRevenue("2026-12-31", "2024-01-01");
-        assertEquals(0.0, revenue, 0.01);
+        int revenue = dishStatDAO.getTotalRevenue("2026-12-31", "2024-01-01");
+        assertEquals(0, revenue);
     }
 
     @Test
@@ -142,7 +142,7 @@ public class DishStatDAOTest {
     @Order(14)
     @DisplayName("Lấy tổng doanh thu với cùng ngày")
     void testGetTotalRevenueSameDay() {
-        double revenue = dishStatDAO.getTotalRevenue("2026-07-14", "2026-07-14");
+        int revenue = dishStatDAO.getTotalRevenue("2026-07-14", "2026-07-14");
         assertTrue(revenue >= 0);
     }
 

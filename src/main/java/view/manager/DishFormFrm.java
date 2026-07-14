@@ -94,9 +94,9 @@ class DishFormFrm extends JFrame {
             return;
         }
 
-        double price;
+        int price;
         try {
-            price = Double.parseDouble(priceText);
+            price = Integer.parseInt(priceText);
             if (price <= 0) {
                 JOptionPane.showMessageDialog(this, "Giá hiện tại phải lớn hơn 0.");
                 return;

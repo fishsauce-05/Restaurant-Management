@@ -31,10 +31,10 @@ public class StaffHomeFrm extends JFrame implements ActionListener {
         JLabel lblStep = new JLabel("(1)");
         lblStep.setFont(new Font("SansSerif", Font.PLAIN, 14));
 
-        JLabel lblTitle = new JLabel("Staff Home View", SwingConstants.CENTER);
+        JLabel lblTitle = new JLabel("Trang chủ nhân viên", SwingConstants.CENTER);
         lblTitle.setFont(new Font("SansSerif", Font.PLAIN, 24));
 
-        JLabel lblWelcome = new JLabel("Welcome " + user.getName());
+        JLabel lblWelcome = new JLabel("Chào mừng " + user.getName());
         lblWelcome.setFont(new Font("SansSerif", Font.PLAIN, 14));
 
         headerPanel.add(lblStep, BorderLayout.WEST);
@@ -46,11 +46,11 @@ public class StaffHomeFrm extends JFrame implements ActionListener {
 
         btnPanel.setPreferredSize(new Dimension(300, 320));
 
-        btnBookTable = createButton("Book a table");
-        btnEditBooking = createButton("Edit a booking");
-        btnOrderDish = createButton("Order dishes");
-        btnPayment = createButton("Payment");
-        btnLogout = createButton("Logout");
+        btnBookTable = createButton("Đặt bàn");
+        btnEditBooking = createButton("Sửa đặt bàn");
+        btnOrderDish = createButton("Gọi món");
+        btnPayment = createButton("Thanh toán");
+        btnLogout = createButton("Đăng xuất");
 
         btnLogout.setForeground(Color.RED);
 

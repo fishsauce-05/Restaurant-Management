@@ -21,7 +21,7 @@ public class SearchFreeTableFrm extends JFrame implements ActionListener {
     private ArrayList<Table> listTable;
 
     public SearchFreeTableFrm(User user) {
-        super("Search Free Table");
+        super("Tìm bàn trống");
         this.user = user;
 
         this.setSize(600, 450);
@@ -38,9 +38,9 @@ public class SearchFreeTableFrm extends JFrame implements ActionListener {
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
         headerPanel.add(new JLabel("(2)"), BorderLayout.WEST);
-        headerPanel.add(new JLabel("Search Free Table", SwingConstants.CENTER), BorderLayout.CENTER);
+        headerPanel.add(new JLabel("Tìm bàn trống", SwingConstants.CENTER), BorderLayout.CENTER);
 
-        btnBack = new JButton("Back");
+        btnBack = new JButton("Quay lại");
         btnBack.setBackground(new Color(255, 255, 153));
         btnBack.setFocusPainted(false);
         btnBack.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -52,15 +52,15 @@ public class SearchFreeTableFrm extends JFrame implements ActionListener {
         gbc.insets = new Insets(10, 15, 10, 15);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        gbc.gridx = 0; gbc.gridy = 0; formPanel.add(new JLabel("Datetime (dd/MM/yyyy HH:mm)"), gbc);
+        gbc.gridx = 0; gbc.gridy = 0; formPanel.add(new JLabel("Ngày giờ (dd/MM/yyyy HH:mm)"), gbc);
         gbc.gridx = 1; txtDatetime = new JTextField("", 20); formPanel.add(txtDatetime, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 1; formPanel.add(new JLabel("Number of people"), gbc);
+        gbc.gridx = 0; gbc.gridy = 1; formPanel.add(new JLabel("Số lượng khách"), gbc);
         gbc.gridx = 1; txtQuantity = new JTextField("", 20); formPanel.add(txtQuantity, gbc);
 
         JPanel btnPanel = new JPanel();
         btnPanel.setOpaque(false);
-        btnSearch = new JButton("Search");
+        btnSearch = new JButton("Tìm kiếm");
         btnSearch.setBackground(Color.WHITE);
         btnPanel.add(btnSearch);
 
@@ -68,7 +68,7 @@ public class SearchFreeTableFrm extends JFrame implements ActionListener {
         topWrapper.add(formPanel, BorderLayout.CENTER);
         topWrapper.add(btnPanel, BorderLayout.SOUTH);
 
-        String[] cols = {"ID", "Table Code", "Capacity", "Status"};
+        String[] cols = {"ID", "Mã bàn", "Sức chứa", "Trạng thái"};
         tableModel = new DefaultTableModel(cols, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {

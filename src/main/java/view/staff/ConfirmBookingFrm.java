@@ -17,7 +17,7 @@ public class ConfirmBookingFrm extends JFrame implements ActionListener {
     private JTextField txtClientName, txtClientPhone, txtDatetime, txtQuantity, txtTableCode;
 
     public ConfirmBookingFrm(User user, Booking b) {
-        super("Confirm Booking");
+        super("Xác nhận đặt bàn");
         this.user = user;
         this.booking = b;
         this.setSize(500, 450);
@@ -31,7 +31,7 @@ public class ConfirmBookingFrm extends JFrame implements ActionListener {
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
         headerPanel.add(new JLabel("(5)"), BorderLayout.WEST);
-        headerPanel.add(new JLabel("Confirm Booking", SwingConstants.CENTER), BorderLayout.CENTER);
+        headerPanel.add(new JLabel("Xác nhận đặt bàn", SwingConstants.CENTER), BorderLayout.CENTER);
 
         JPanel formPanel = new JPanel(new GridBagLayout());
         formPanel.setOpaque(false);
@@ -39,25 +39,25 @@ public class ConfirmBookingFrm extends JFrame implements ActionListener {
         gbc.insets = new Insets(10, 15, 10, 15);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        gbc.gridx = 0; gbc.gridy = 0; formPanel.add(new JLabel("Client name"), gbc);
+        gbc.gridx = 0; gbc.gridy = 0; formPanel.add(new JLabel("Tên khách hàng"), gbc);
         gbc.gridx = 1; txtClientName = new JTextField(booking.getClient() != null ? booking.getClient().getName() : "", 20);
         txtClientName.setEditable(false); formPanel.add(txtClientName, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 1; formPanel.add(new JLabel("Client phone number"), gbc);
+        gbc.gridx = 0; gbc.gridy = 1; formPanel.add(new JLabel("Số điện thoại khách hàng"), gbc);
         gbc.gridx = 1; txtClientPhone = new JTextField(booking.getClient() != null ? booking.getClient().getPhone() : "", 20);
         txtClientPhone.setEditable(false); formPanel.add(txtClientPhone, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 2; formPanel.add(new JLabel("Datetime"), gbc);
+        gbc.gridx = 0; gbc.gridy = 2; formPanel.add(new JLabel("Ngày giờ"), gbc);
         gbc.gridx = 1;
         String dateStr = booking.getBookDate() != null ? new SimpleDateFormat("dd/MM/yyyy").format(booking.getBookDate()) : "";
         txtDatetime = new JTextField(dateStr + " " + (booking.getBookTime() != null ? booking.getBookTime() : ""), 20);
         txtDatetime.setEditable(false); formPanel.add(txtDatetime, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 3; formPanel.add(new JLabel("Number of people"), gbc);
+        gbc.gridx = 0; gbc.gridy = 3; formPanel.add(new JLabel("Số lượng khách"), gbc);
         gbc.gridx = 1; txtQuantity = new JTextField(String.valueOf(booking.getQuantity()), 20);
         txtQuantity.setEditable(false); formPanel.add(txtQuantity, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 4; formPanel.add(new JLabel("Table Code"), gbc);
+        gbc.gridx = 0; gbc.gridy = 4; formPanel.add(new JLabel("Mã bàn"), gbc);
         gbc.gridx = 1;
         StringBuilder tables = new StringBuilder();
         if(booking.getBookedTables() != null) {
@@ -71,15 +71,15 @@ public class ConfirmBookingFrm extends JFrame implements ActionListener {
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 10));
         btnPanel.setOpaque(false);
 
-        btnCancel = new JButton("Cancel");
+        btnCancel = new JButton("Hủy");
         btnCancel.setBackground(new Color(255, 69, 0));
         btnCancel.setPreferredSize(new Dimension(120, 35));
 
-        btnConfirm = new JButton("Confirm");
+        btnConfirm = new JButton("Xác nhận");
         btnConfirm.setBackground(new Color(50, 205, 50));
         btnConfirm.setPreferredSize(new Dimension(120, 35));
 
-        btnBack = new JButton("Back");
+        btnBack = new JButton("Quay lại");
         btnBack.setBackground(new Color(255, 255, 153));
         btnBack.setFocusPainted(false);
         btnBack.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -111,11 +111,11 @@ public class ConfirmBookingFrm extends JFrame implements ActionListener {
 
             dao.booking.BookingDAO dao = new dao.booking.BookingDAO();
             if (dao.addBooking(booking)) {
-                JOptionPane.showMessageDialog(this, "Booking successfully!");
+                JOptionPane.showMessageDialog(this, "Đặt bàn thành công!");
                 new StaffHomeFrm(user).setVisible(true);
                 this.dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Booking failed! Vui lòng thử lại.");
+                JOptionPane.showMessageDialog(this, "Đặt bàn thất bại! Vui lòng thử lại.");
             }
         }
     }

@@ -152,7 +152,7 @@ public class BestSellingDishStatFrm extends JFrame implements ActionListener {
             return;
         }
 
-        double totalRevenue = 0;
+        int totalRevenue = 0;
         int rank = 1;
         for (DishStat ds : listStat) {
             tableModel.addRow(new Object[]{
@@ -160,14 +160,14 @@ public class BestSellingDishStatFrm extends JFrame implements ActionListener {
                 ds.getDishCode(),
                 ds.getName(),
                 ds.getCategory(),
-                String.format("%,.0f", ds.getPrice()),
+                String.format("%,d", ds.getPrice()),
                 ds.getTotalQuantity(),
-                String.format("%,.0f", ds.getTotalRevenue())
+                String.format("%,d", ds.getTotalRevenue())
             });
             totalRevenue += ds.getTotalRevenue();
         }
 
-        lblTotalRevenue.setText(String.format("%,.0f VNĐ", totalRevenue));
+        lblTotalRevenue.setText(String.format("%,d VNĐ", totalRevenue));
     }
 
     @Override

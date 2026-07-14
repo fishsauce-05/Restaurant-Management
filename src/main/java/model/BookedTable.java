@@ -5,7 +5,7 @@ import java.util.Date;
 public class BookedTable extends BaseEntity {
     private Date checkIn;
     private Date checkOut;
-    private double price;
+    private int price;
     private boolean isCheckedIn;
     private Table table;
 
@@ -19,8 +19,8 @@ public class BookedTable extends BaseEntity {
     public Date getCheckOut() { return checkOut; }
     public void setCheckOut(Date checkOut) { this.checkOut = checkOut; }
 
-    public double getPrice() { return price; }
-    public void setPrice(double price) { this.price = price; }
+    public int getPrice() { return price; }
+    public void setPrice(int price) { this.price = price; }
 
     public boolean isCheckedIn() { return isCheckedIn; }
     public void setCheckedIn(boolean isCheckedIn) { this.isCheckedIn = isCheckedIn; }

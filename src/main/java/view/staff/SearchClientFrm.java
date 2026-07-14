@@ -19,7 +19,7 @@ public class SearchClientFrm extends JFrame implements ActionListener {
     private ArrayList<Client> listClient;
 
     public SearchClientFrm(User user, Booking tmpBooking) {
-        super("Search Client");
+        super("Tìm khách hàng");
         this.user = user;
         this.tmpBooking = tmpBooking;
         this.setSize(600, 450);
@@ -36,9 +36,9 @@ public class SearchClientFrm extends JFrame implements ActionListener {
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
         headerPanel.add(new JLabel("(3)"), BorderLayout.WEST);
-        headerPanel.add(new JLabel("Search Client", SwingConstants.CENTER), BorderLayout.CENTER);
+        headerPanel.add(new JLabel("Tìm khách hàng", SwingConstants.CENTER), BorderLayout.CENTER);
 
-        btnBack = new JButton("Back");
+        btnBack = new JButton("Quay lại");
         btnBack.setBackground(new Color(255, 255, 153));
         btnBack.setFocusPainted(false);
         btnBack.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -50,20 +50,20 @@ public class SearchClientFrm extends JFrame implements ActionListener {
         gbc.insets = new Insets(10, 15, 10, 15);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        gbc.gridx = 0; gbc.gridy = 0; formPanel.add(new JLabel("Client name"), gbc);
+        gbc.gridx = 0; gbc.gridy = 0; formPanel.add(new JLabel("Tên khách hàng"), gbc);
         gbc.gridx = 1; txtClientName = new JTextField(20); formPanel.add(txtClientName, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 1; formPanel.add(new JLabel("Client phone number"), gbc);
+        gbc.gridx = 0; gbc.gridy = 1; formPanel.add(new JLabel("Số điện thoại khách hàng"), gbc);
         gbc.gridx = 1; txtClientPhone = new JTextField(20); formPanel.add(txtClientPhone, gbc);
 
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
         btnPanel.setOpaque(false);
 
-        btnSearch = new JButton("Search");
+        btnSearch = new JButton("Tìm kiếm");
         btnSearch.setBackground(Color.WHITE);
         btnSearch.setPreferredSize(new Dimension(120, 30));
 
-        btnAddClient = new JButton("Add Client");
+        btnAddClient = new JButton("Thêm khách hàng");
         btnAddClient.setBackground(new Color(255, 255, 153));
         btnAddClient.setPreferredSize(new Dimension(120, 30));
 
@@ -73,7 +73,7 @@ public class SearchClientFrm extends JFrame implements ActionListener {
         topWrapper.add(formPanel, BorderLayout.CENTER);
         topWrapper.add(btnPanel, BorderLayout.SOUTH);
 
-        String[] cols = {"ID", "Name", "Phone number", "Address"};
+        String[] cols = {"ID", "Tên", "Số điện thoại", "Địa chỉ"};
         tableModel = new DefaultTableModel(cols, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {

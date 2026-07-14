@@ -8,7 +8,7 @@ public class Order extends BaseEntity {
     public static final String STATUS_PAID = "Đã thanh toán";
 
     private Date orderTime;
-    private double totalAmount;
+    private int totalAmount;
     private Table table;
     private User user;
     private ArrayList<OrderItem> orderItems;
@@ -23,8 +23,8 @@ public class Order extends BaseEntity {
     public Date getOrderTime() { return orderTime; }
     public void setOrderTime(Date orderTime) { this.orderTime = orderTime; }
 
-    public double getTotalAmount() { return totalAmount; }
-    public void setTotalAmount(double totalAmount) { this.totalAmount = totalAmount; }
+    public int getTotalAmount() { return totalAmount; }
+    public void setTotalAmount(int totalAmount) { this.totalAmount = totalAmount; }
 
     public Table getTable() { return table; }
     public void setTable(Table table) { this.table = table; }
@@ -58,7 +58,7 @@ public class Order extends BaseEntity {
     }
 
     public void recalculateTotal() {
-        double total = 0;
+        int total = 0;
         if (orderItems != null) {
             for (OrderItem item : orderItems) {
                 item.setTemporaryAmount(item.getQuantity() * item.getUnitPrice());

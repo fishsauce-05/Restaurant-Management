@@ -38,7 +38,7 @@ public class StaffFormDialog extends JDialog {
     }
 
     public StaffFormDialog(Frame owner, UserServiceImpl userService, User editingUser) {
-        super(owner, editingUser == null ? "Them nhan vien" : "Sua nhan vien", true);
+        super(owner, editingUser == null ? "Thêm nhân viên" : "Sửa nhân viên", true);
         this.userService = userService;
         this.editingUser = editingUser;
         configureDialog(owner);
@@ -68,31 +68,31 @@ public class StaffFormDialog extends JDialog {
 
         userCodeField.setEditable(false);
 
-        addField(formPanel, constraints, 0, "Ma nhan vien:", userCodeField);
-        addField(formPanel, constraints, 1, "Ten dang nhap:", usernameField);
-        addField(formPanel, constraints, 2, "Mat khau:", passwordField);
-        addField(formPanel, constraints, 3, "Ho ten:", fullNameField);
+        addField(formPanel, constraints, 0, "Mã nhân viên:", userCodeField);
+        addField(formPanel, constraints, 1, "Tên đăng nhập:", usernameField);
+        addField(formPanel, constraints, 2, "Mật khẩu:", passwordField);
+        addField(formPanel, constraints, 3, "Họ tên:", fullNameField);
 
         constraints.gridx = 0;
         constraints.gridy = 4;
         constraints.weightx = 0;
-        formPanel.add(new JLabel("Vai tro:"), constraints);
+        formPanel.add(new JLabel("Vai trò:"), constraints);
         constraints.gridx = 1;
         constraints.weightx = 1;
         formPanel.add(roleComboBox, constraints);
 
-        addField(formPanel, constraints, 5, "So dien thoai:", phoneField);
+        addField(formPanel, constraints, 5, "Số điện thoại:", phoneField);
         addField(formPanel, constraints, 6, "Email:", emailField);
 
-        JLabel passwordHintLabel = new JLabel("Khi sua, de trong mat khau de giu mat khau hien tai.");
+        JLabel passwordHintLabel = new JLabel("Khi sửa, để trống mật khẩu để giữ mật khẩu hiện tại.");
         constraints.gridx = 1;
         constraints.gridy = 7;
         constraints.weightx = 1;
         formPanel.add(passwordHintLabel, constraints);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton saveButton = new JButton("Luu");
-        JButton cancelButton = new JButton("Huy");
+        JButton saveButton = new JButton("Lưu");
+        JButton cancelButton = new JButton("Hủy");
         saveButton.addActionListener(event -> saveUser());
         cancelButton.addActionListener(event -> dispose());
         buttonPanel.add(saveButton);
@@ -116,7 +116,7 @@ public class StaffFormDialog extends JDialog {
 
     private void populateForm() {
         if (editingUser == null) {
-            userCodeField.setText("Tu dong tao khi luu");
+            userCodeField.setText("Tự động tạo khi lưu");
             roleComboBox.setSelectedItem("STAFF");
             return;
         }
@@ -132,7 +132,7 @@ public class StaffFormDialog extends JDialog {
 
     private void saveUser() {
         if (editingUser == null && getPassword().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui long nhap mat khau khi them nhan vien.");
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu khi thêm nhân viên.");
             return;
         }
 
@@ -146,7 +146,7 @@ public class StaffFormDialog extends JDialog {
             saved = true;
             dispose();
         } catch (Exception exception) {
-            JOptionPane.showMessageDialog(this, exception.getMessage(), "Du lieu khong hop le", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, exception.getMessage(), "Dữ liệu không hợp lệ", JOptionPane.WARNING_MESSAGE);
         }
     }
 

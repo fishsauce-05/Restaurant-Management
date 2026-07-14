@@ -80,7 +80,7 @@ public class GuestStatFrm extends JFrame implements ActionListener {
                     gs.getTimeFrm(),
                     gs.getAvgCustomers(),
                     String.format("%,.2f", gs.getAvgRevenuePerHead()),
-                    String.format("%,.2f", gs.getTotalRevenue())
+                    String.format("%,d", gs.getTotalRevenue())
                 });
             }
         } else if (e.getSource() == btnBack) {
@@ -93,13 +93,13 @@ public class GuestStatFrm extends JFrame implements ActionListener {
         ArrayList<GuestStat> result = new ArrayList<>();
 
         Map<String, Integer> customerCount = new HashMap<>();
-        Map<String, Double> revenueSum = new HashMap<>();
+        Map<String, Integer> revenueSum = new HashMap<>();
         Map<String, Integer> bookingCount = new HashMap<>();
 
         String[] Frms = {"11:00-13:00", "18:00-20:00", "Khác"};
         for (String f : Frms) {
             customerCount.put(f, 0);
-            revenueSum.put(f, 0.0);
+            revenueSum.put(f, 0);
             bookingCount.put(f, 0);
         }
 
@@ -117,10 +117,10 @@ public class GuestStatFrm extends JFrame implements ActionListener {
         for (String f : Frms) {
             int bookingsQty = bookingCount.get(f);
             int totalCust = customerCount.get(f);
-            double totalRev = revenueSum.get(f);
-
+            int totalRev = revenueSum.get(f);
+ 
             int avgCust = bookingsQty > 0 ? (totalCust / bookingsQty) : 0;
-            double avgRevPerHead = totalCust > 0 ? (totalRev / totalCust) : 0.0;
+            double avgRevPerHead = totalCust > 0 ? ((double) totalRev / totalCust) : 0.0;
 
             result.add(new GuestStat(f, avgCust, avgRevPerHead, totalRev));
         }

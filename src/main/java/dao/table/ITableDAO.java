@@ -35,4 +35,6 @@ public interface ITableDAO {
     boolean hasTableRelatedBusiness(int id);
 
     boolean checkTableCode(String code);
+
+    boolean checkoutTable(int tableId);
 }

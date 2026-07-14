@@ -54,11 +54,11 @@ public class SelectTableToPayFrm extends JFrame implements ActionListener {
 
         JPanel pnlButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
-        btnRefresh = new JButton("🔄 Làm mới");
+        btnRefresh = new JButton("Làm mới");
         btnRefresh.addActionListener(this);
         btnRefresh.setFocusPainted(false);
 
-        btnSelect = new JButton("📋 Xem chi tiết hóa đơn");
+        btnSelect = new JButton("Xem chi tiết hóa đơn");
         btnSelect.setBackground(new Color(39, 174, 96));
         btnSelect.setForeground(Color.WHITE);
         btnSelect.setFont(new Font("Segoe UI", Font.BOLD, 13));

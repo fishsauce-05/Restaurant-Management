@@ -117,11 +117,11 @@ public class BillDetailFrm extends JFrame implements ActionListener {
         }
 
         int stt = 1;
-        double total = 0;
+        int total = 0;
 
         for (OrderDish item : order.getOrderDishes()) {
 
-            double thanhTien = item.getQuantity() * item.getCurrentPrice();
+            int thanhTien = item.getQuantity() * item.getCurrentPrice();
             total += thanhTien;
 
             tableModel.addRow(new Object[]{
@@ -129,14 +129,14 @@ public class BillDetailFrm extends JFrame implements ActionListener {
                 item.getDish().getName(),
                 item.getDish().getCategory(),
                 item.getQuantity(),
-                String.format("%,.0f", item.getCurrentPrice()),
-                String.format("%,.0f", thanhTien)
+                String.format("%,d", item.getCurrentPrice()),
+                String.format("%,d", thanhTien)
             });
         }
 
         order.setTotalAmount(total);
 
-        lblTotalAmount.setText(String.format("%,.0f VNĐ", total));
+        lblTotalAmount.setText(String.format("%,d VNĐ", total));
     }
 
     @Override
@@ -144,7 +144,7 @@ public class BillDetailFrm extends JFrame implements ActionListener {
         if (e.getSource().equals(btnConfirmPayment)) {
             if (order == null) return;
             int confirm = JOptionPane.showConfirmDialog(this,
-                    "Xác nhận thanh toán " + String.format("%,.0f VNĐ", order.getTotalAmount()) + " ?",
+                    "Xác nhận thanh toán " + String.format("%,d VNĐ", order.getTotalAmount()) + " ?",
                     "Xác nhận thanh toán", JOptionPane.YES_NO_OPTION);
             if (confirm != JOptionPane.YES_OPTION) return;
 
@@ -161,6 +161,7 @@ public class BillDetailFrm extends JFrame implements ActionListener {
                 if (order.getTable() != null) {
                     TableDAO tableDAO = new TableDAO();
                     tableDAO.updateTableStatus(order.getTable().getId(), "Trống");
+                    tableDAO.checkoutTable(order.getTable().getId());
                 }
                 JOptionPane.showMessageDialog(this,
                         "Thanh toán thành công!\nMã hóa đơn: #" + bill.getId(),

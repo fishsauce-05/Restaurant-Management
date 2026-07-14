@@ -35,7 +35,7 @@ public class RevenueDetailFrm extends JFrame {
                 b.getId(),
                 b.getPaymentDate(),
                 b.getPaymentTime(),
-                String.format("%,.2f", b.getTotalAmount()),
+                String.format("%,d", b.getTotalAmount()),
                 b.getBooking() != null ? b.getBooking().getId() : "N/A"
             });
         }

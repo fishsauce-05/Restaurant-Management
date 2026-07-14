@@ -14,7 +14,7 @@ public class AddClientFrm extends JFrame implements ActionListener {
     private JButton btnAddClient, btnBack;
 
     public AddClientFrm(User user, Booking tmpBooking) {
-        super("Add New Client");
+        super("Thêm khách hàng mới");
         this.user = user;
         this.tmpBooking = tmpBooking;
         this.setSize(500, 400);
@@ -28,7 +28,7 @@ public class AddClientFrm extends JFrame implements ActionListener {
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
         headerPanel.add(new JLabel("(4)"), BorderLayout.WEST);
-        headerPanel.add(new JLabel("Add New Client", SwingConstants.CENTER), BorderLayout.CENTER);
+        headerPanel.add(new JLabel("Thêm khách hàng mới", SwingConstants.CENTER), BorderLayout.CENTER);
 
         JPanel formPanel = new JPanel(new GridBagLayout());
         formPanel.setOpaque(false);
@@ -36,26 +36,26 @@ public class AddClientFrm extends JFrame implements ActionListener {
         gbc.insets = new Insets(10, 15, 10, 15);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        gbc.gridx = 0; gbc.gridy = 0; formPanel.add(new JLabel("Client name"), gbc);
+        gbc.gridx = 0; gbc.gridy = 0; formPanel.add(new JLabel("Tên khách hàng"), gbc);
         gbc.gridx = 1; txtClientName = new JTextField(20); formPanel.add(txtClientName, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 1; formPanel.add(new JLabel("Client phone number"), gbc);
+        gbc.gridx = 0; gbc.gridy = 1; formPanel.add(new JLabel("Số điện thoại khách hàng"), gbc);
         gbc.gridx = 1; txtClientPhone = new JTextField(20); formPanel.add(txtClientPhone, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 2; formPanel.add(new JLabel("Client email"), gbc);
+        gbc.gridx = 0; gbc.gridy = 2; formPanel.add(new JLabel("Email khách hàng"), gbc);
         gbc.gridx = 1; txtClientEmail = new JTextField(20); formPanel.add(txtClientEmail, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 3; formPanel.add(new JLabel("Client address"), gbc);
+        gbc.gridx = 0; gbc.gridy = 3; formPanel.add(new JLabel("Địa chỉ khách hàng"), gbc);
         gbc.gridx = 1; txtClientAddress = new JTextField(20); formPanel.add(txtClientAddress, gbc);
 
         JPanel btnPanel = new JPanel();
         btnPanel.setOpaque(false);
-        btnAddClient = new JButton("Add Client");
+        btnAddClient = new JButton("Thêm khách hàng");
         btnAddClient.setBackground(new Color(255, 255, 153));
         btnAddClient.setPreferredSize(new Dimension(150, 30));
         btnPanel.add(btnAddClient);
 
-        btnBack = new JButton("Back");
+        btnBack = new JButton("Quay lại");
         btnBack.setBackground(new Color(255, 255, 153));
         btnBack.setFocusPainted(false);
         btnBack.setFont(new Font("SansSerif", Font.PLAIN, 14));

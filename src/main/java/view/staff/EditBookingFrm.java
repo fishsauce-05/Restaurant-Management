@@ -18,7 +18,7 @@ public class EditBookingFrm extends JFrame implements ActionListener {
     private boolean isCheckedAndFree = false;
 
     public EditBookingFrm(User u, Booking booking) {
-        super("Edit Booking");
+        super("Sửa đặt bàn");
         this.user = u;
         this.booking = booking;
         this.setSize(500, 350);
@@ -32,7 +32,7 @@ public class EditBookingFrm extends JFrame implements ActionListener {
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
         headerPanel.add(new JLabel("(7)"), BorderLayout.WEST);
-        headerPanel.add(new JLabel("Edit Booking", SwingConstants.CENTER), BorderLayout.CENTER);
+        headerPanel.add(new JLabel("Sửa đặt bàn", SwingConstants.CENTER), BorderLayout.CENTER);
 
         JPanel formPanel = new JPanel(new GridBagLayout());
         formPanel.setOpaque(false);
@@ -42,13 +42,13 @@ public class EditBookingFrm extends JFrame implements ActionListener {
 
         String dateStr = booking.getBookDate() != null ? new SimpleDateFormat("dd/MM/yyyy").format(booking.getBookDate()) : "";
 
-        gbc.gridx = 0; gbc.gridy = 0; formPanel.add(new JLabel("Date (dd/MM/yyyy)"), gbc);
+        gbc.gridx = 0; gbc.gridy = 0; formPanel.add(new JLabel("Ngày (dd/MM/yyyy)"), gbc);
         gbc.gridx = 1; txtDate = new JTextField(dateStr, 20); formPanel.add(txtDate, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 1; formPanel.add(new JLabel("Time (HH:mm)"), gbc);
+        gbc.gridx = 0; gbc.gridy = 1; formPanel.add(new JLabel("Giờ (HH:mm)"), gbc);
         gbc.gridx = 1; txtTime = new JTextField(booking.getBookTime() != null ? booking.getBookTime() : "", 20); formPanel.add(txtTime, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 2; formPanel.add(new JLabel("Number of people"), gbc);
+        gbc.gridx = 0; gbc.gridy = 2; formPanel.add(new JLabel("Số lượng khách"), gbc);
         gbc.gridx = 1; txtQuantity = new JTextField(String.valueOf(booking.getQuantity()), 20); formPanel.add(txtQuantity, gbc);
 
         DocumentListener resetFlagListener = new DocumentListener() {
@@ -63,15 +63,15 @@ public class EditBookingFrm extends JFrame implements ActionListener {
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 10));
         btnPanel.setOpaque(false);
 
-        btnCheckFreeTable = new JButton("Check Free Table");
+        btnCheckFreeTable = new JButton("Kiểm tra bàn trống");
         btnCheckFreeTable.setBackground(new Color(255, 255, 153));
         btnCheckFreeTable.setPreferredSize(new Dimension(150, 35));
 
-        btnConfirm = new JButton("Confirm");
+        btnConfirm = new JButton("Xác nhận");
         btnConfirm.setBackground(new Color(50, 205, 50));
         btnConfirm.setPreferredSize(new Dimension(150, 35));
 
-        btnBack = new JButton("Back");
+        btnBack = new JButton("Quay lại");
         btnBack.setBackground(new Color(255, 255, 153));
         btnBack.setFocusPainted(false);
         btnBack.setFont(new Font("SansSerif", Font.PLAIN, 14));

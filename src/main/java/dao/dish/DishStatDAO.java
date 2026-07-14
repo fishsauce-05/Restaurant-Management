@@ -37,9 +37,9 @@ public class DishStatDAO extends DAO implements IDishStatDAO {
                 ds.setDishCode(rs.getString("dishCode"));
                 ds.setName(rs.getString("name"));
                 ds.setCategory(rs.getString("category"));
-                ds.setPrice(rs.getDouble("price"));
+                ds.setPrice(rs.getInt("price"));
                 ds.setTotalQuantity(rs.getInt("totalQuantity"));
-                ds.setTotalRevenue(rs.getDouble("totalRevenue"));
+                ds.setTotalRevenue(rs.getInt("totalRevenue"));
                 list.add(ds);
             }
         } catch (Exception e) {
@@ -49,8 +49,8 @@ public class DishStatDAO extends DAO implements IDishStatDAO {
     }
 
     @Override
-    public double getTotalRevenue(String startDate, String endDate) {
-        if (con == null) return 0.0;
+    public int getTotalRevenue(String startDate, String endDate) {
+        if (con == null) return 0;
         String sql = "SELECT SUM(totalAmount) AS totalRevenue FROM tblBill "
                 + "WHERE createTime >= ? AND createTime <= ?";
         try {
@@ -59,12 +59,12 @@ public class DishStatDAO extends DAO implements IDishStatDAO {
             ps.setString(2, endDate + " 23:59:59");
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return rs.getDouble("totalRevenue");
+                return rs.getInt("totalRevenue");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 0.0;
+        return 0;
     }
 
     @Override

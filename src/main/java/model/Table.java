@@ -46,9 +46,25 @@ public class Table extends BaseEntity {
     public String getCheckinTime(){
         return checkinTime;
     }
-    public void setCheckinTime(String checkinTime)
-    {
-        this.checkinTime = checkinTime;
+
+    public void setCheckinTime(String checkinTime) {
+        this.checkinTime = formatCheckinTime(checkinTime);
+    }
+
+    private String formatCheckinTime(String raw) {
+        if (raw == null) {
+            return null;
+        }
+        String digitsOnly = raw.replace(",", "").trim();
+        if (digitsOnly.matches("\\d{14}")) {
+            String yyyy = digitsOnly.substring(0, 4);
+            String MM   = digitsOnly.substring(4, 6);
+            String dd   = digitsOnly.substring(6, 8);
+            String HH   = digitsOnly.substring(8, 10);
+            String mm   = digitsOnly.substring(10, 12);
+            return HH + ":" + mm + " " + dd + "/" + MM + "/" + yyyy;
+        }
+        return raw;
     }
 
     @Override

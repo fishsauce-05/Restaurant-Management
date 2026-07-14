@@ -21,7 +21,7 @@ public class OrderFrm extends JFrame implements ActionListener {
     private ArrayList<Dish> listDish;
 
     public OrderFrm(User u, Order tmpOrder) {
-        super("Order Dishes");
+        super("Gọi món");
         this.user = u;
         this.tmpOrder = tmpOrder;
         this.setSize(600, 450);
@@ -38,7 +38,7 @@ public class OrderFrm extends JFrame implements ActionListener {
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
         headerPanel.add(new JLabel("(9)"), BorderLayout.WEST);
-        JLabel lblTitle = new JLabel("Order Dishes", SwingConstants.CENTER);
+        JLabel lblTitle = new JLabel("Gọi món", SwingConstants.CENTER);
         lblTitle.setFont(new Font("SansSerif", Font.PLAIN, 20));
         headerPanel.add(lblTitle, BorderLayout.CENTER);
 
@@ -49,28 +49,28 @@ public class OrderFrm extends JFrame implements ActionListener {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         gbc.gridx = 0; gbc.gridy = 0;
-        formPanel.add(new JLabel("Dish name"), gbc);
+        formPanel.add(new JLabel("Tên món"), gbc);
 
         gbc.gridx = 1; gbc.gridy = 0;
         txtDishName = new JTextField("", 20);
         formPanel.add(txtDishName, gbc);
 
         gbc.gridx = 0; gbc.gridy = 1;
-        btnSearch = new JButton("Search");
+        btnSearch = new JButton("Tìm kiếm");
         btnSearch.setBackground(Color.WHITE);
         btnSearch.setFocusPainted(false);
         btnSearch.setPreferredSize(new Dimension(150, 35));
         formPanel.add(btnSearch, gbc);
 
         gbc.gridx = 1; gbc.gridy = 1;
-        btnConfirm = new JButton("Confirm");
+        btnConfirm = new JButton("Xác nhận");
         btnConfirm.setBackground(new Color(50, 205, 50));
         btnConfirm.setForeground(Color.BLACK);
         btnConfirm.setFocusPainted(false);
         btnConfirm.setPreferredSize(new Dimension(150, 35));
         formPanel.add(btnConfirm, gbc);
 
-        btnBack = new JButton("Back");
+        btnBack = new JButton("Quay lại");
         btnBack.setBackground(new Color(255, 255, 153));
         btnBack.setFocusPainted(false);
         btnBack.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -79,7 +79,7 @@ public class OrderFrm extends JFrame implements ActionListener {
         topWrapper.add(headerPanel, BorderLayout.NORTH);
         topWrapper.add(formPanel, BorderLayout.CENTER);
 
-        String[] cols = {"ID", "Dish name", "Quantity", "Price"};
+        String[] cols = {"ID", "Tên món", "Số lượng", "Đơn giá"};
         tableModel = new DefaultTableModel(cols, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {

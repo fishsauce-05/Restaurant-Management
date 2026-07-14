@@ -14,7 +14,7 @@ public class ConfirmOrderFrm extends JFrame implements ActionListener {
     private JButton btnBack, btnCancel, btnConfirm;
 
     public ConfirmOrderFrm(User u, Order order) {
-        super("Confirm Order");
+        super("Xác nhận gọi món");
         this.user = u;
         this.order = order;
         this.setSize(600, 450);
@@ -28,26 +28,26 @@ public class ConfirmOrderFrm extends JFrame implements ActionListener {
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setOpaque(false);
         headerPanel.add(new JLabel("(10)"), BorderLayout.WEST);
-        headerPanel.add(new JLabel("Confirm Order", SwingConstants.CENTER), BorderLayout.CENTER);
+        headerPanel.add(new JLabel("Xác nhận gọi món", SwingConstants.CENTER), BorderLayout.CENTER);
 
-        btnBack = new JButton("Back");
+        btnBack = new JButton("Quay lại");
         btnBack.setBackground(new Color(255, 255, 153));
         btnBack.setFocusPainted(false);
         headerPanel.add(btnBack, BorderLayout.EAST);
 
-        String[] cols = {"No.", "Dish name", "Quantity", "Price"};
+        String[] cols = {"STT", "Tên món", "Số lượng", "Đơn giá"};
         DefaultTableModel model = new DefaultTableModel(cols, 0) {
             @Override
             public boolean isCellEditable(int row, int column) { return false; }
         };
         JTable tblOrderDetails = new JTable(model);
 
-        double total = 0;
+        int total = 0;
         int stt = 1;
         if (order.getOrderDishes() != null) {
             for (OrderDish od : order.getOrderDishes()) {
                 if (od.getQuantity() > 0) {
-                    double lineTotal = od.getQuantity() * od.getCurrentPrice();
+                    int lineTotal = od.getQuantity() * od.getCurrentPrice();
                     total += lineTotal;
                     model.addRow(new Object[]{ String.format("%02d", stt++), od.getDish().getName(), od.getQuantity(), lineTotal });
                 }
@@ -58,9 +58,9 @@ public class ConfirmOrderFrm extends JFrame implements ActionListener {
         JPanel totalPanel = new JPanel(new BorderLayout());
         totalPanel.setOpaque(false);
         totalPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
-        JLabel lblTotalPrice = new JLabel("Total Price: " + total, SwingConstants.RIGHT);
+        JLabel lblTotalPrice = new JLabel(String.format("%,d VNĐ", total), SwingConstants.RIGHT);
         lblTotalPrice.setFont(new Font("SansSerif", Font.BOLD, 16));
-        totalPanel.add(new JLabel("Total Price:"), BorderLayout.WEST);
+        totalPanel.add(new JLabel("Tổng tiền:"), BorderLayout.WEST);
         totalPanel.add(lblTotalPrice, BorderLayout.EAST);
 
         JPanel centerPanel = new JPanel(new BorderLayout());
@@ -71,11 +71,11 @@ public class ConfirmOrderFrm extends JFrame implements ActionListener {
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 10));
         btnPanel.setOpaque(false);
 
-        btnCancel = new JButton("Cancel");
+        btnCancel = new JButton("Hủy");
         btnCancel.setBackground(new Color(255, 69, 0));
         btnCancel.setPreferredSize(new Dimension(120, 35));
 
-        btnConfirm = new JButton("Confirm");
+        btnConfirm = new JButton("Xác nhận");
         btnConfirm.setBackground(new Color(50, 205, 50));
         btnConfirm.setPreferredSize(new Dimension(120, 35));
 
