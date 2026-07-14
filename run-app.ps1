@@ -3,7 +3,7 @@ $ErrorActionPreference = "Stop"
 $projectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location $projectRoot
 
-$jdbcJar = Join-Path $projectRoot "lib\mssql-jdbc-12.8.1.jre11.jar"
+$jdbcJar = Join-Path $projectRoot "lib\mysql-connector-j-9.7.0.jar"
 
 if (-not (Test-Path $jdbcJar)) {
     throw "Khong tim thay JDBC driver tai $jdbcJar"

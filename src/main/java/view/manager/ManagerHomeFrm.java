@@ -17,7 +17,7 @@ public class ManagerHomeFrm extends JFrame {
     private final User currentUser;
 
     public ManagerHomeFrm(User currentUser) {
-        super("Quan ly nha hang - Manager");
+        super("Quản lý nhà hàng - Manager");
         this.currentUser = currentUser;
         configureFrm();
         buildContent();
@@ -33,7 +33,7 @@ public class ManagerHomeFrm extends JFrame {
         JPanel rootPanel = new JPanel(new BorderLayout(16, 16));
         rootPanel.setBorder(BorderFactory.createEmptyBorder(24, 32, 24, 32));
 
-        JLabel titleLabel = new JLabel("Quan ly nha hang", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Quản lý nhà hàng", SwingConstants.CENTER);
         titleLabel.setFont(titleLabel.getFont().deriveFont(22.0f));
 
         JLabel userLabel = new JLabel(buildUserGreeting(), SwingConstants.CENTER);
@@ -43,12 +43,12 @@ public class ManagerHomeFrm extends JFrame {
         headerPanel.add(userLabel);
 
         JPanel navigationPanel = new JPanel(new GridLayout(6, 1, 12, 12));
-        JButton dishButton = new JButton("Quan ly mon an");
-        JButton tableButton = new JButton("Quan ly ban");
-        JButton statButton = new JButton("Xem thong ke bao cao");
-        JButton clientButton = new JButton("Quan ly khach hang");
-        JButton staffButton = new JButton("Quan ly nhan vien");
-        JButton logoutButton = new JButton("Dang xuat");
+        JButton dishButton = new JButton("Quản lý món ăn");
+        JButton tableButton = new JButton("Quản lý bàn");
+        JButton statButton = new JButton("Xem thống kê báo cáo");
+        JButton clientButton = new JButton("Quản lý khách hàng");
+        JButton staffButton = new JButton("Quản lý nhân viên");
+        JButton logoutButton = new JButton("Đăng xuất");
 
         dishButton.addActionListener(event -> { new ManageDishFrm(currentUser).setVisible(true); dispose(); });
         tableButton.addActionListener(event -> { new ManageTableFrm(currentUser).setVisible(true); dispose(); });
@@ -71,7 +71,7 @@ public class ManagerHomeFrm extends JFrame {
 
     private String buildUserGreeting() {
         if (currentUser == null) {
-            return "Dang dang nhap voi quyen Manager";
+            return "Đang đăng nhập với quyền Manager";
         }
 
         String displayName = currentUser.getName();
@@ -80,7 +80,7 @@ public class ManagerHomeFrm extends JFrame {
         }
 
         String username = currentUser.getUsername() == null ? "" : currentUser.getUsername();
-        return "Xin chao " + displayName + " (" + username + ") - " + currentUser.getRole();
+        return "Xin chào " + displayName + " (" + username + ") - " + currentUser.getRole();
     }
 
     private void logout() {

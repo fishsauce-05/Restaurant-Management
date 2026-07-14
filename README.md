@@ -1,265 +1,67 @@
-# Restaurant Module
+# HỆ THỐNG QUẢN LÝ NHÀ HÀNG (RESTAURANT MANAGEMENT SYSTEM)
 
-README này dùng để clone project, tạo CSDL, chạy app, và hiểu rõ những thay đổi đã được tích hợp thêm vào project gốc.
+Dự án được xây dựng nhằm tối ưu hóa quy trình vận hành, gọi món và quản lý doanh thu cho các nhà hàng quy mô vừa và lớn.
 
-## 1. Mục tiêu hiện tại
+---
 
-Project hiện tại gồm 2 nhóm chức năng:
+## I. Kỹ thuật/công nghệ sử dụng
 
-- Staff module của project nhóm gốc:
-  - đặt bàn
-  - tìm bàn trống
-  - tìm và thêm khách hàng cho booking
-  - sửa booking
-  - gọi món
-  - xác nhận order
-- Manager module được tích hợp thêm:
-  - login
-  - phân quyền `MANAGER` / `STAFF`
-  - quản lý khách hàng
-  - quản lý nhân viên
+*   **Ngôn ngữ lập trình:** Java (JDK 17 trở lên)
+*   **Công nghệ giao diện:** Java Swing (GUI)
+*   **Cơ sở dữ liệu:** MySQL (Cổng mặc định: 3306)
+*   **Trình quản lý dự án:** Maven
+*   **Thư viện kết nối:** MySQL Connector/J (`mysql-connector-j-9.7.0.jar`) đi kèm sẵn trong thư mục `lib/`
 
-Luồng chạy hiện tại:
+---
 
-- `MANAGER` đăng nhập -> vào màn hình manager
-- `STAFF` đăng nhập -> vào `StaffHomeFrm`
+## II. Giới thiệu bài toán và các chức năng
 
-## 2. Yêu cầu môi trường
+Dự án giải quyết bài toán quản lý quy trình khép kín tại nhà hàng từ khâu đón tiếp khách hàng, gọi món cho đến thanh toán hóa đơn và thống kê báo cáo doanh số cho cấp quản lý.
 
-Cần có các thành phần sau:
+### 1. Phân hệ Nhân viên (Staff Module)
+*   **Tìm kiếm bàn trống:** Kiểm tra tình trạng bàn ăn theo thời gian thực (ngày, giờ, sức chứa).
+*   **Đặt bàn trước (Booking):** Đặt giữ chỗ cho khách hàng, liên kết thông tin khách hàng và vị trí bàn được chỉ định.
+*   **Gọi món (Order):** Lên thực đơn gọi món trực tiếp khi khách tại bàn, hỗ trợ cập nhật danh sách món ăn đang phục vụ.
+*   **Thanh toán hóa đơn (Billing):** Tính tiền dựa trên các món thực tế đã gọi, cập nhật trạng thái bàn sau khi thanh toán thành công và in hóa đơn bán hàng.
 
-- Windows
-- JDK 17 hoặc mới hơn
-- MySQL Server đang chạy local (cổng mặc định 3306)
-- MySQL Workbench hoặc công cụ quản trị MySQL tương đương
+### 2. Phân hệ Quản lý (Manager Module)
+*   **Đăng nhập & Phân quyền:** Xác thực người dùng và chuyển hướng giao diện phù hợp với vai trò `MANAGER` hoặc `STAFF`.
+*   **Quản lý danh mục:** Thực hiện các tác vụ CRUD (Thêm, Sửa, Xóa mềm) đối với Khách hàng, Nhân viên, Bàn ăn và Món ăn.
+*   **Báo cáo thống kê:**
+    *   Thống kê món ăn bán chạy nhất (Best-selling) theo doanh thu và số lượng.
+    *   Báo cáo tổng doanh thu của nhà hàng theo khoảng thời gian, tháng cụ thể hoặc theo khung giờ hoạt động.
 
-Project đã kèm sẵn JDBC driver MySQL (`mysql-connector-j-9.7.0.jar`) trong thư mục `lib`, nên không cần cài thêm thư viện JDBC bằng tay để chạy app.
+---
 
-## 3. Cấu hình CSDL
+## III. Giới thiệu cách tổ chức nhóm
 
-Project đang dùng database:
+Nhóm phát triển dự án gồm **03 thành viên** với sự phân chia vai trò rõ ràng như sau:
 
-- `restaurant_db`
+1.  **Thành viên A (Trưởng nhóm):** Thiết kế cấu trúc cơ sở dữ liệu MySQL, xây dựng các lớp xử lý DAO chung (`DAO`, `UserDAO`, `ClientDAO`), phát triển và kiểm thử nghiệp vụ cho Phân hệ Quản lý (Manager Module).
+2.  **Thành viên B:** Thiết kế toàn bộ giao diện đồ họa Java Swing (`view/`), phát triển luồng tương tác thực tế cho Phân hệ Nhân viên (Staff Module: Đặt bàn, Gọi món, Thanh toán).
+3.  **Thành viên C:** Xây dựng bộ dữ liệu kiểm thử tự động (Unit Test / Integration Test), chuẩn bị tài liệu dự án, kịch bản thuyết trình và hướng dẫn triển khai.
 
-Project đang kết nối MySQL local theo thứ tự ưu tiên sau:
+---
 
-1. JDBC URL được override bằng system property hoặc environment variable
-2. `jdbc:mysql://localhost:3306/restaurant_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8`
-3. `jdbc:mysql://127.0.0.1:3306/restaurant_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8`
+## IV. Cách chạy ở trong máy
 
-Mặc định hiện tại cho MySQL login trong app:
+### 1. Chuẩn bị
+*   Đảm bảo máy đã cài đặt **Java (JDK 17+)** và **MySQL Server**.
+*   Mở MySQL client, tạo database bằng câu lệnh:
+    ```sql
+    CREATE DATABASE IF NOT EXISTS restaurant_db CHARACTER SET utf8mb4;
+    ```
+*   Ứng dụng sẽ tự động khởi tạo các bảng và dữ liệu mẫu (Seed Data) ở lần đầu tiên kết nối. Tài khoản quản trị mặc định: `admin / 123456`, nhân viên: `staff01 / 123456`.
 
-- username: `root`
-- password: `123456`
+### 2. Chạy ứng dụng
+Khuyến nghị sử dụng các file script đi kèm để tự động compile và cấu hình classpath JDBC MySQL chuẩn xác:
 
-Nếu máy khác không có login này, có thể override trong môi trường chạy bằng cách thiết lập biến môi trường.
+*   **Cách 1 (Sử dụng File Batch):** Double click trực tiếp vào file `run-app.bat` tại thư mục gốc của dự án.
+*   **Cách 2 (Sử dụng PowerShell):** Mở cửa sổ PowerShell tại thư mục dự án và chạy câu lệnh:
+    ```powershell
+    powershell -ExecutionPolicy Bypass -File .\run-app.ps1
+    ```
 
-## 4. Tạo database trên máy mới
-
-Mở MySQL client (ví dụ MySQL Workbench) và chạy:
-
-```sql
-CREATE DATABASE IF NOT EXISTS restaurant_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-```
-
-Nếu database đã tồn tại thì bỏ qua bước này.
-
-## 5. Tạo bảng và seed dữ liệu
-
-Trong MySQL client:
-
-1. Chọn database `restaurant_db` bằng câu lệnh: `USE restaurant_db;`
-2. Mở và chạy file database script (hoặc để ứng dụng tự động chạy `ensureManagerTables()` tạo các bảng cốt lõi khi kết nối lần đầu).
-3. Đảm bảo cấu trúc cơ sở dữ liệu có đầy đủ các bảng:
-   - `tblUser`
-   - `tblClient`
-   - `tblTable`
-   - `tblDish`
-   - `tblBooking`
-   - `tblBookedTable`
-   - `tblOrder`
-   - `tblOrderDish`
-   - `tblBill`
-
-Các tài khoản mặc định được seed sẵn:
-- user `admin / 123456` với role `MANAGER`
-- user `staff01 / 123456` với role `STAFF`
-
-## 6. Cách chạy app
-
-Khuyến nghị dùng script thay vì bấm Run trực tiếp từ IDE.
-
-### Cách 1: file batch
-
-Chạy:
-
-```bat
-run-app.bat
-```
-
-### Cách 2: PowerShell
-
-Chạy:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\run-app.ps1
-```
-
-Script sẽ tự động:
-
-1. xóa class cũ trong `target/classes`
-2. compile lại toàn bộ source bằng `javac`
-3. nạp JDBC driver MySQL từ thư mục `lib`
-4. mở app
-
-Nếu chỉ bấm Run trong IDE, có thể gặp lỗi classpath JDBC hoặc build class cũ. Nếu muốn an toàn, dùng script.
-
-## 7. Tài khoản demo và kết quả mong đợi
-
-Tài khoản demo:
-
-- `admin / 123456`
-- `staff01 / 123456`
-
-Kết quả mong đợi:
-
-- `admin / 123456` -> vào màn hình manager
-- `staff01 / 123456` -> vào màn hình staff
-
-Nếu login thất bại, kiểm tra theo thứ tự:
-
-1. MySQL service đã chạy chưa (cổng 3306)
-2. database `restaurant_db` đã tạo chưa
-3. tài khoản MySQL `root` và mật khẩu `123456` có đúng không
-4. app đang chạy bằng `run-app.bat` hoặc `run-app.ps1` chưa
-
-## 8. Override thông tin kết nối
-
-App hỗ trợ override bằng system property hoặc environment variable.
-
-Override JDBC URL:
-
-- system property: `restaurant.db.url`
-- environment variable: `RESTAURANT_DB_URL`
-
-Override username:
-
-- system property: `restaurant.db.username`
-- environment variable: `RESTAURANT_DB_USERNAME`
-
-Override password:
-
-- system property: `restaurant.db.password`
-- environment variable: `RESTAURANT_DB_PASSWORD`
-
-Ví dụ PowerShell:
-
-```powershell
-$env:RESTAURANT_DB_USERNAME="your_mysql_user"
-$env:RESTAURANT_DB_PASSWORD="your_mysql_password"
-powershell -ExecutionPolicy Bypass -File .\run-app.ps1
-```
-
-Nếu muốn override URL:
-
-```powershell
-$env:RESTAURANT_DB_URL="jdbc:mysql://localhost:3306/restaurant_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8"
-powershell -ExecutionPolicy Bypass -File .\run-app.ps1
-```
-
-## 9. Những thay đổi đã được tích hợp so với project nhóm ban đầu
-
-### 9.1. Phần đã có sẵn từ project nhóm gốc
-
-Project nhóm ban đầu đã có staff UI và một số DAO/model cho:
-
-- đặt bàn
-- tìm bàn trống
-- tìm khách hàng
-- thêm khách hàng cho booking
-- sửa booking
-- gọi món
-- xác nhận order
-
-### 9.2. Phần được thêm vào
-
-Đã thêm manager module:
-
-- login
-- phân quyền role
-- manager home
-- manage clients
-- manage staff
-
-Đã thêm service layer:
-
-- `AuthService`
-- `ClientService`
-- `UserService`
-
-Đã thêm DAO:
-
-- `UserDAO`
-
-Đã mở rộng DAO sẵn có:
-
-- `ClientDAO` giữ chức năng staff cũ và thêm CRUD/search/soft delete cho manager
-
-Đã mở rộng model dùng chung:
-
-- `User`
-- `Client`
-
-Đã bổ sung schema MySQL tự động khởi tạo bảng.
-
-Đã đổi entry point:
-
-- trước đây main chỉ in `Hello World!`
-- hiện tại main mở màn hình login
-
-Đã đổi luồng điều hướng:
-
-- `MANAGER` -> manager module
-- `STAFF` -> staff module
-
-### 9.3. Phần đã sửa để app chạy được trên máy thật
-
-Đã sửa kết nối MySQL:
-
-- hỗ trợ override bằng env var / system property
-
-Đã thêm cơ chế tự nạp JDBC driver nếu IDE không cấp classpath đúng.
-
-Đã thêm script chạy project để tránh tình trạng build xong nhưng vẫn nạp class cũ.
-
-## 10. Các luồng cần test sau khi clone
-
-Cần test tối thiểu:
-
-1. login bằng `admin`
-2. login bằng `staff01`
-3. manager -> quản lý khách hàng
-4. manager -> quản lý nhân viên
-5. staff -> đặt bàn
-6. staff -> sửa booking
-7. staff -> gọi món
-
-## 11. Các lưu ý cho thành viên khác
-
-- Không xóa `tblUser`
-- Không bỏ cột `status` của `tblClient`
-- Không sửa `run-app.ps1` nếu chưa hiểu rõ cách build và classpath hiện tại
-- Nếu thay đổi role/login flow thì phải sửa đồng bộ login + manager/staff navigation
-- Nếu đổi tên bảng trong SQL thì phải sửa toàn bộ DAO liên quan
-
-## 13. Cách xử lý khi máy khác vẫn không chạy
-
-Nếu máy khác vẫn lỗi, cần gửi lại đầy đủ các thông tin sau:
-
-1. Lỗi hiện trên hộp thoại hoặc stack trace
-2. Đã chạy `schema_seed.sql` hay chưa
-3. Có tạo SQL login `restaurant_app` hay không
-4. SQL Server đang là default instance hay named instance
-5. Đang chạy bằng `run-app.bat` hay bấm Run trong IDE
-
-Chỉ cần 5 thông tin đó là đủ để debug nhanh.
+*Lưu ý: Mặc định ứng dụng sử dụng cấu hình kết nối tài khoản MySQL local là `root` và mật khẩu `123456`. Để thay đổi, bạn có thể thiết lập các biến môi trường hệ thống trước khi chạy:*
+*   `RESTAURANT_DB_USERNAME` (Tên tài khoản MySQL)
+*   `RESTAURANT_DB_PASSWORD` (Mật khẩu tài khoản MySQL)

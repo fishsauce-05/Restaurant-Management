@@ -29,7 +29,7 @@ public class LoginFrm extends JFrame {
     }
 
     LoginFrm(AuthServiceImpl authService) {
-        super("Dang nhap - Quan ly nha hang");
+        super("Đăng nhập - Quản lý nhà hàng");
         this.authService = authService;
         configureFrm();
         buildContent();
@@ -52,7 +52,7 @@ public class LoginFrm extends JFrame {
 
         constraints.gridx = 0;
         constraints.gridy = 0;
-        formPanel.add(new JLabel("Ten dang nhap"), constraints);
+        formPanel.add(new JLabel("Tên đăng nhập"), constraints);
 
         constraints.gridx = 1;
         constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -61,13 +61,13 @@ public class LoginFrm extends JFrame {
         constraints.gridx = 0;
         constraints.gridy = 1;
         constraints.fill = GridBagConstraints.NONE;
-        formPanel.add(new JLabel("Mat khau"), constraints);
+        formPanel.add(new JLabel("Mật khẩu"), constraints);
 
         constraints.gridx = 1;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         formPanel.add(passwordField, constraints);
 
-        JButton loginButton = new JButton("Dang nhap");
+        JButton loginButton = new JButton("Đăng nhập");
         loginButton.addActionListener(event -> attemptLogin());
 
         JPanel actionPanel = new JPanel();
@@ -86,7 +86,7 @@ public class LoginFrm extends JFrame {
         } catch (IllegalArgumentException exception) {
             showError(exception.getMessage());
         } catch (Exception exception) {
-            showError("Khong the dang nhap do loi ket noi du lieu: " + exception.getMessage());
+            showError("Không thể đăng nhập do lỗi kết nối dữ liệu: " + exception.getMessage());
         } finally {
             Arrays.fill(passwordChars, '\0');
         }
@@ -102,12 +102,12 @@ public class LoginFrm extends JFrame {
             new StaffHomeFrm(currentUser).setVisible(true);
             return;
         }
-        showError("Vai tro khong duoc ho tro: " + currentUser.getRole());
+        showError("Vai trò không được hỗ trợ: " + currentUser.getRole());
         new LoginFrm().setVisible(true);
     }
 
     private void showError(String message) {
-        JOptionPane.showMessageDialog(this, message, "Dang nhap that bai", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, message, "Đăng nhập thất bại", JOptionPane.ERROR_MESSAGE);
         passwordField.selectAll();
         passwordField.requestFocusInWindow();
     }
