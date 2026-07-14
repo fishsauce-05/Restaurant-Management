@@ -2,7 +2,6 @@ package dao.bill;
 
 import model.*;
 import java.sql.*;
-import java.util.ArrayList;
 
 import dao.DAO;
 
@@ -91,115 +90,5 @@ public class BillDAO extends DAO implements IBillDAO {
             e.printStackTrace();
         }
         return null;
-    }
-
-    @Override
-    public ArrayList<Bill> getBillsByDateRange(String startDate, String endDate) {
-        ArrayList<Bill> list = new ArrayList<>();
-        if (con == null) return list;
-
-        String sql = "SELECT bl.id, CAST(bl.createTime AS DATE) AS paymentDate, CAST(bl.createTime AS TIME) AS paymentTime, bl.totalAmount, " +
-                     "b.id AS bid, b.bookDate, b.bookTime, b.quantity, b.status " +
-                     "FROM tblBill bl " +
-                     "LEFT JOIN tblOrder o ON bl.tblOrderID = o.id " +
-                     "LEFT JOIN tblBookedTable bt ON o.tblTableID = bt.tblTableID " +
-                     "LEFT JOIN tblBooking b ON bt.tblBookingID = b.id " +
-                     "WHERE CAST(bl.createTime AS DATE) BETWEEN ? AND ? ORDER BY bl.createTime ASC";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, startDate);
-            ps.setString(2, endDate);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(mapStatResultToBill(rs));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    @Override
-    public ArrayList<Bill> getBillsByTimeFrm(String timeFrm, String startDate, String endDate) {
-        ArrayList<Bill> list = new ArrayList<>();
-        if (con == null) return list;
-
-        String sql = "SELECT bl.id, CAST(bl.createTime AS DATE) AS paymentDate, CAST(bl.createTime AS TIME) AS paymentTime, bl.totalAmount, " +
-                     "b.id AS bid, b.bookDate, b.bookTime, b.quantity, b.status " +
-                     "FROM tblBill bl " +
-                     "LEFT JOIN tblOrder o ON bl.tblOrderID = o.id " +
-                     "LEFT JOIN tblBookedTable bt ON o.tblTableID = bt.tblTableID " +
-                     "LEFT JOIN tblBooking b ON bt.tblBookingID = b.id " +
-                     "WHERE CAST(bl.createTime AS DATE) BETWEEN ? AND ? ";
-
-        if (timeFrm.equals("11:00-13:00")) {
-            sql += "AND CAST(bl.createTime AS TIME) BETWEEN '11:00:00' AND '13:00:00' ";
-        } else if (timeFrm.equals("18:00-20:00")) {
-            sql += "AND CAST(bl.createTime AS TIME) BETWEEN '18:00:00' AND '20:00:00' ";
-        } else {
-            sql += "AND CAST(bl.createTime AS TIME) NOT BETWEEN '11:00:00' AND '13:00:00' " +
-                   "AND CAST(bl.createTime AS TIME) NOT BETWEEN '18:00:00' AND '20:00:00' ";
-        }
-        sql += "ORDER BY bl.createTime ASC";
-
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, startDate);
-            ps.setString(2, endDate);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(mapStatResultToBill(rs));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    @Override
-    public ArrayList<Bill> getBillsByMonth(int month, int year) {
-        ArrayList<Bill> list = new ArrayList<>();
-        if (con == null) return list;
-
-        String sql = "SELECT bl.id, CAST(bl.createTime AS DATE) AS paymentDate, CAST(bl.createTime AS TIME) AS paymentTime, bl.totalAmount, " +
-                     "b.id AS bid, b.bookDate, b.bookTime, b.quantity, b.status " +
-                     "FROM tblBill bl " +
-                     "LEFT JOIN tblOrder o ON bl.tblOrderID = o.id " +
-                     "LEFT JOIN tblBookedTable bt ON o.tblTableID = bt.tblTableID " +
-                     "LEFT JOIN tblBooking b ON bt.tblBookingID = b.id " +
-                     "WHERE MONTH(bl.createTime) = ? AND YEAR(bl.createTime) = ? " +
-                     "ORDER BY bl.createTime ASC";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, month);
-            ps.setInt(2, year);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(mapStatResultToBill(rs));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    private Bill mapStatResultToBill(ResultSet rs) throws SQLException {
-        Bill bl = new Bill();
-        bl.setId(rs.getInt("id"));
-        bl.setPaymentDate(rs.getDate("paymentDate"));
-        bl.setPaymentTime(rs.getString("paymentTime"));
-        bl.setTotalAmount(rs.getInt("totalAmount"));
-
-        int bookingId = rs.getInt("bid");
-        if (!rs.wasNull()) {
-            Booking b = new Booking();
-            b.setId(bookingId);
-            b.setBookDate(rs.getDate("bookDate"));
-            b.setBookTime(rs.getString("bookTime"));
-            b.setQuantity(rs.getInt("quantity"));
-            b.setStatus(rs.getString("status"));
-            bl.setBooking(b);
-        }
-        return bl;
     }
 }

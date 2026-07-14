@@ -42,24 +42,21 @@ public class ManagerHomeFrm extends JFrame {
         headerPanel.add(titleLabel);
         headerPanel.add(userLabel);
 
-        JPanel navigationPanel = new JPanel(new GridLayout(6, 1, 12, 12));
+        JPanel navigationPanel = new JPanel(new GridLayout(5, 1, 12, 12));
         JButton dishButton = new JButton("Quản lý món ăn");
         JButton tableButton = new JButton("Quản lý bàn");
-        JButton statButton = new JButton("Xem thống kê báo cáo");
         JButton clientButton = new JButton("Quản lý khách hàng");
         JButton staffButton = new JButton("Quản lý nhân viên");
         JButton logoutButton = new JButton("Đăng xuất");
 
         dishButton.addActionListener(event -> { new ManageDishFrm(currentUser).setVisible(true); dispose(); });
         tableButton.addActionListener(event -> { new ManageTableFrm(currentUser).setVisible(true); dispose(); });
-        statButton.addActionListener(event -> new SelectStatFrm(currentUser).setVisible(true));
         clientButton.addActionListener(event -> new ManageClientFrm(this).setVisible(true));
         staffButton.addActionListener(event -> new ManageStaffFrm(currentUser).setVisible(true));
         logoutButton.addActionListener(event -> logout());
 
         navigationPanel.add(dishButton);
         navigationPanel.add(tableButton);
-        navigationPanel.add(statButton);
         navigationPanel.add(clientButton);
         navigationPanel.add(staffButton);
         navigationPanel.add(logoutButton);

@@ -106,18 +106,7 @@ CREATE TABLE IF NOT EXISTS tblBill (
     CONSTRAINT FK_tblBill_tblUser FOREIGN KEY (tblUserId) REFERENCES tblUser(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE OR REPLACE VIEW tblDishStat AS
-SELECT
-    d.id,
-    d.dishCode,
-    d.category,
-    d.name,
-    d.price,
-    COALESCE(SUM(od.quantity), 0) AS totalQuantity,
-    COALESCE(SUM(od.quantity * od.currentPrice), 0) AS totalRevenue
-FROM tblDish d
-LEFT JOIN tblOrderDish od ON od.tblDishId = d.id
-GROUP BY d.id, d.dishCode, d.category, d.name, d.price;
+
 
 INSERT INTO tblUser (userCode, username, password, name, role, phone, email, status)
 SELECT 'NV001', 'admin', '123456', 'System Manager', 'MANAGER', '0911000001', 'admin@restaurant.local', 'ACTIVE'
